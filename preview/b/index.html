@@ -56,9 +56,8 @@ h1 em{font-style:normal;color:var(--blue);position:relative}
 .hstat .n{font-size:24px;font-weight:800;letter-spacing:-.5px;color:var(--ink)}
 .hstat .t{font-size:12.5px;color:var(--muted);line-height:1.4;margin-top:3px}
 .hero-visual{position:relative}
-.hero-frame{position:relative;border-radius:20px;overflow:hidden;background:linear-gradient(160deg,var(--copper-l),#faf6ec);border:1px solid var(--line-2);min-height:430px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px}
-.hero-frame .big{font-size:44px;margin-bottom:14px}
-.hero-frame p{color:#8f8770;font-size:14.5px;max-width:260px}
+.hero-frame{position:relative;border-radius:20px;overflow:hidden;background:var(--copper-l);border:1px solid var(--line-2);min-height:430px}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .hero-tag{position:absolute;left:18px;bottom:18px;background:#fff;border:1px solid var(--line-2);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow);text-align:left}
 .hero-tag .p{font-size:22px;font-weight:800;color:var(--blue);letter-spacing:-.5px}
 .hero-tag .s{font-size:12.5px;color:var(--muted)}
@@ -87,6 +86,8 @@ h2{font-size:clamp(26px,3.8vw,38px);font-weight:800;letter-spacing:-.7px;margin-
 .price{font-size:28px;font-weight:800;color:var(--blue);margin:14px 0 4px;letter-spacing:-.8px}
 .price small{font-size:14px;color:var(--muted);font-weight:600}
 .photo{border-radius:12px;background:linear-gradient(160deg,var(--copper-l),#f6f1e4);min-height:200px;display:flex;align-items:center;justify-content:center;color:#a29a80;font-size:14px;margin-bottom:20px;text-align:center;padding:12px;border:1px dashed var(--line-2)}
+.photo.has-img{padding:0;border:none;min-height:0;background:none;overflow:hidden;aspect-ratio:4/3}
+.photo.has-img img{width:100%;height:100%;object-fit:cover;display:block;object-position:50% 45%}
 ul.ticks{list-style:none;margin-top:10px}
 ul.ticks li{padding-left:26px;position:relative;margin:8px 0;color:var(--muted);font-size:15.5px}
 ul.ticks li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
@@ -218,8 +219,7 @@ footer li{margin:7px 0}
     </div>
     <div class="hero-visual">
       <div class="hero-frame">
-        <div class="big">📷</div>
-        <p>Фото погреба на участке —<br>добавим на этой неделе</p>
+        <img class="hero-photo" src="pogreb-uchastok.webp" alt="Погреб из полипропилена после монтажа на участке" width="960" height="548" fetchpriority="high" decoding="async">
         <div class="hero-tag">
           <div class="p">от 158 900 ₽</div>
           <div class="s">погреб 1,5 × 1,66 × 1,83 м</div>
@@ -247,7 +247,7 @@ footer li{margin:7px 0}
     </div>
     <div class="grid g2">
       <div class="card">
-        <div class="photo">Фотография погреба — добавим на этой неделе</div>
+        <div class="photo has-img"><img src="pogreb-vnutri.webp" alt="Погреб изнутри: полипропиленовые полки с заготовками" width="864" height="1184" loading="lazy" decoding="async"></div>
         <h3>🥕 Погреб из полипропилена</h3>
         <p>Полностью герметичное хранилище для дома и дачи. Не ржавеет как металл, не гниёт как дерево, не покрывается грибком как бетон.</p>
         <div class="price">от 158 900 ₽ <small>· размер 1,5 × 1,66 × 1,83 м</small></div>
