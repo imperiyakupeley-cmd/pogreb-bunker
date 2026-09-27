@@ -91,10 +91,10 @@ ul.ticks{list-style:none;margin-top:10px}
 ul.ticks li{padding-left:26px;position:relative;margin:8px 0;color:var(--muted);font-size:15.5px}
 ul.ticks li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
 .mini-cta{display:inline-block;margin-top:16px;font-weight:700;color:var(--blue);text-decoration:none;border-bottom:2px solid var(--copper);padding-bottom:2px}
-.cross-sell{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--copper-l);border:1px solid var(--line-2);border-radius:14px;padding:20px 24px}
-.cross-sell p{color:var(--muted);font-size:14.5px;max-width:660px}
-.cross-sell p strong{color:var(--ink)}
-.cross-sell a{font-weight:700;white-space:nowrap}
+.cross-sell{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--blue-deep);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:22px 26px}
+.cross-sell p{color:#cfe4ee;font-size:14.5px;max-width:660px}
+.cross-sell p strong{color:#fff}
+.cross-sell a{font-weight:700;white-space:nowrap;color:var(--copper-l2)}
 
 /* ── Тёмная секция ── */
 .dark{background:var(--blue-deep);color:#fff;border-radius:0}
@@ -139,7 +139,7 @@ details p{color:var(--muted);margin-top:12px;font-size:15.5px;max-width:70ch}
 /* ── CTA-полосы ── */
 .cta-band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(160deg,var(--copper-l),#faf6ec)}
 .cta-band .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:28px;padding-bottom:28px}
-.cta-band h3{font-size:clamp(19px,2.6vw,24px);font-weight:800;letter-spacing:-.4px;max-width:540px;line-height:1.25}
+.cta-band h3{font-size:clamp(19px,2.6vw,24px);font-weight:800;letter-spacing:-.4px;max-width:540px;line-height:1.25;color:var(--ink)}
 .cta-band p{color:var(--muted);font-size:14.5px;margin-top:6px;max-width:540px}
 .cta-band .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .cta-band .tel-link{font-weight:700;color:var(--blue-d);text-decoration:none;font-size:16px;white-space:nowrap;padding:0 6px}
@@ -235,7 +235,7 @@ footer li{margin:7px 0}
     <div class="trust-item"><span class="n">10 мм</span><span class="t">стенки из первичного пищевого ПП</span></div>
     <div class="trust-item"><span class="n">Ø110</span><span class="t">два вентиляционных канала в базе</span></div>
     <div class="trust-item"><span class="n">0 ₽</span><span class="t">выезд не нужен — расчёт по фото участка</span></div>
-    <div class="trust-item"><span class="n">РФ</span><span class="t">доставка манипулятором в любой регион</span></div>
+    <div class="trust-item"><span class="n">РФ</span><span class="t">доставка в любой регион — транспорт подберём под маршрут</span></div>
   </div>
 </div>
 
@@ -253,7 +253,8 @@ footer li{margin:7px 0}
         <div class="price">от 158 900 ₽ <small>· размер 1,5 × 1,66 × 1,83 м</small></div>
         <ul class="ticks">
           <li>Стенки 10 мм, крышка с УФ-защитой</li>
-          <li>Вентиляция, LED-светильник, полки, лестница</li>
+          <li>Полки из того же полипропилена: не гниют и не ржавеют от сырости, размер — под ваши банки и ящики</li>
+          <li>Вентиляция, LED-светильник, лестница</li>
           <li>Кастомизация: нары, стол, соединение секций</li>
           <li>Установка своими силами или под ключ</li>
         </ul>
@@ -274,8 +275,8 @@ footer li{margin:7px 0}
       </div>
     </div>
     <div class="cross-sell">
-      <p><strong>А ещё мы производим купели и бассейны</strong> — из того же пищевого полипропилена, с 2017 года. Те же материалы и та же сварка, отдельный сайт.</p>
-      <a href="https://imperia-kupeley.ru/" target="_blank" rel="noopener">Смотреть купели и бассейны →</a>
+      <p><strong>Тот же премиальный подход — в купелях и бассейнах</strong>: пищевой полипропилен, облицовка из лиственницы, гидромассаж и подсветка. Производим с 2017 года.</p>
+      <a href="https://imperia-kupeley.ru/" target="_blank" rel="noopener">Каталог купелей и бассейнов →</a>
     </div>
   </div>
 </section>
@@ -292,7 +293,7 @@ footer li{margin:7px 0}
       <div class="card"><h3>🥗 Пищевой пластик</h3><p>Сертифицированный первичный полипропилен: безопасен для аллергиков и детей, заготовки без запаха и привкуса.</p></div>
       <div class="card"><h3>🐁 Грызуны равнодушны</h3><p>Пластик не грызут мыши и крысы, в нём не заводится грибок и плесень.</p></div>
       <div class="card"><h3>⚡ Монтаж за день</h3><p>Без бетонирования — от 2 часов до одного дня. С бетонированием — 3–4 дня под ключ.</p></div>
-      <div class="card"><h3>🚚 Доставка по России</h3><p>Погрузка и выгрузка манипулятором входит в стоимость доставки. Отправляем в любой регион.</p></div>
+      <div class="card"><h3>🚚 Доставка по России</h3><p>Отправляем в любой регион: по югу и соседним областям — манипулятором, на дальние расстояния — автотранспортом. Способ и стоимость подберём под ваш город в расчёте.</p></div>
     </div>
     <div class="cta-band" style="margin-top:36px;border-radius:16px;border:1px solid var(--line-2)">
       <div class="wrap">
