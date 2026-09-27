@@ -131,6 +131,20 @@ details p{color:var(--muted);margin-top:12px;font-size:15.5px;max-width:70ch}
 .note{font-size:13px;color:var(--muted);margin-top:12px}
 .ok-msg{display:none;background:#e7f6ec;border:1.5px solid #58b57c;color:#123c28;border-radius:10px;padding:14px 16px;font-weight:600;margin-top:14px}
 
+/* ── CTA-полосы ── */
+.cta-band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(160deg,var(--sand-l),#faf6ec)}
+.cta-band .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:28px;padding-bottom:28px}
+.cta-band h3{font-size:clamp(19px,2.6vw,24px);font-weight:800;letter-spacing:-.4px;max-width:540px;line-height:1.25}
+.cta-band p{color:var(--muted);font-size:14.5px;margin-top:6px;max-width:540px}
+.cta-band .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cta-band .tel-link{font-weight:700;color:var(--green-d);text-decoration:none;font-size:16px;white-space:nowrap;padding:0 6px}
+.faq-ask{margin-top:22px;color:var(--muted);font-size:15.5px}
+.faq-ask a{font-weight:700}
+
+/* ── Мобильный липкий бар ── */
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.97);border-top:1px solid var(--line-2);box-shadow:0 -6px 24px rgba(22,29,24,.12);display:none;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+.sticky-cta .btn{flex:1;min-width:0;padding-left:10px;padding-right:10px;font-size:15px}
+
 /* ── Футер ── */
 footer{background:#11180f;color:#93a395;padding:42px 0;font-size:14px}
 footer a{color:#c9d8ca}
@@ -159,6 +173,11 @@ footer li{margin:7px 0}
   .hero-stats{flex-direction:column;gap:14px}
   .hstat+.hstat{padding-left:0;border-left:none}
   .top-actions .btn-outline{display:none}
+  .sticky-cta.show{display:flex}
+  body.has-sticky{padding-bottom:76px}
+  .cta-band .wrap{flex-direction:column;align-items:flex-start}
+  .cta-band .acts{width:100%}
+  .cta-band .acts .btn{flex:1;min-width:0}
 }
 </style>
 </head>
@@ -185,7 +204,7 @@ footer li{margin:7px 0}
         <a class="btn btn-wa" id="wa-hero" href="#">Получить расчёт за час</a>
         <a class="btn btn-ghost" href="#products">Смотреть модели</a>
       </div>
-      <p class="hero-note">Отвечаем в течение часа · 9:00–20:00 МСК · без выходных</p>
+      <p class="hero-note">Отвечаем в течение часа · 9:00–20:00 МСК · без выходных<br>Расчёт бесплатный и ни к чему не обязывает</p>
       <div class="hero-stats">
         <div class="hstat"><div class="n">3000+</div><div class="t">изделий за 8 лет</div></div>
         <div class="hstat"><div class="n">30 лет</div><div class="t">срок службы материала</div></div>
@@ -266,6 +285,18 @@ footer li{margin:7px 0}
       <div class="card"><h3>⚡ Монтаж за день</h3><p>Без бетонирования — от 2 часов до одного дня. С бетонированием — 3–4 дня под ключ.</p></div>
       <div class="card"><h3>🚚 Доставка по России</h3><p>Погрузка и выгрузка манипулятором входит в стоимость доставки. Отправляем в любой регион.</p></div>
     </div>
+    <div class="cta-band" style="margin-top:36px;border-radius:16px;border:1px solid var(--line-2)">
+      <div class="wrap">
+        <div>
+          <h3>Убедились в материале? Узнайте цену под свой участок</h3>
+          <p>Расчёт бесплатный и ни к чему не обязывает — ответим в течение часа (9:00–20:00 МСК).</p>
+        </div>
+        <div class="acts">
+          <a class="btn btn-wa" id="wa-mid1" href="#">Рассчитать мой погреб</a>
+          <a class="tel-link" href="tel:+78612132215">📞 +7 (861) 213-22-15</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -279,6 +310,18 @@ footer li{margin:7px 0}
       <div class="step"><span class="num"></span><h4>Установка</h4><p>Манипулятором: «самостоятельно» — 2 часа–1 день, «под ключ» — 3–4 дня.</p></div>
       <div class="step"><span class="num"></span><h4>Десятилетия пользы</h4><p>Внутри сухо, темно и прохладно. Конденсат снимается осушителем.</p></div>
     </div>
+    <div class="cta-band" style="margin-top:40px;border-radius:16px;border:1px solid var(--line-2)">
+      <div class="wrap">
+        <div>
+          <h3>Начните с шага 1 — бесплатного расчёта</h3>
+          <p>Осень — удобный сезон для монтажа: грунт копается легко, без летней засухи и зимнего промерзания. Ответим в течение часа.</p>
+        </div>
+        <div class="acts">
+          <a class="btn btn-wa" id="wa-mid2" href="#">Получить расчёт за час</a>
+          <a class="tel-link" href="tel:+79933205565">📞 +7 993 320-55-65</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -286,13 +329,14 @@ footer li{margin:7px 0}
   <div class="wrap">
     <div class="sec-head"><h2>Частые вопросы</h2></div>
     <div class="faq-list">
-      <details><summary>Сколько стоит погреб и от чего зависит цена?</summary><p>Стартовый размер 1,5 × 1,66 × 1,83 м — от 158 900 ₽. Дальше цена зависит от размера, крышки, полок, лестницы, утепления и армирования. Бункер всегда считается индивидуально. Точный расчёт — после заявки, обычно в тот же день.</p></details>
+      <details><summary>Сколько стоит погреб и от чего зависит цена?</summary><p>Стартовый размер 1,5 × 1,66 × 1,83 м — от 158 900 ₽. Дальше цена зависит от размера, крышки, полок, лестницы, утепления и армирования. Бункер всегда считается индивидуально. Точный расчёт — после заявки, обычно в тот же день. <a href="#" id="wa-price">Рассчитать мой вариант →</a></p></details>
       <details><summary>У меня высокий уровень грунтовых вод. Поставится?</summary><p>Да — герметичный полипропиленовый корпус как раз для таких участков. При высоких водах и больших размерах рекомендуем внешнее армирование композитом и бетонирование стен и потолка.</p></details>
       <details><summary>Нужен ли бетон под погреб?</summary><p>Не обязательно: без бетонирования монтаж занимает от 2 часов до одного дня. Бетонирование (3–4 дня) советуем при высоких грунтовых водах, тяжёлой технике над погребом и размерах от 2 × 3 м.</p></details>
       <details><summary>Что с вентиляцией и светом?</summary><p>Во всех моделях — два вентиляционных канала Ø 110 мм: приточный и вытяжной. У моделей покрупнее — активная вентиляция с вентилятором и LED-светильник; для них нужно электричество 220 В на участке.</p></details>
       <details><summary>Можно соединить несколько погребов?</summary><p>Да, это популярная опция — переходы между секциями, полки, нары, стол и скамья. Собираем под вашу задачу, включая варианты под укрытие.</p></details>
       <details><summary>Вы действительно производитель?</summary><p>Да. Собственное производство в Краснодаре, больше 3000 изделий за 8 лет: бассейны, купели, погреба. Вы покупаете без посредников — поэтому цена ниже, а сроки короче.</p></details>
     </div>
+    <p class="faq-ask">Не нашли свой вопрос? <a href="#" id="wa-faq">Задайте его в WhatsApp</a> — ответим честно и без давления. Или позвоните: <a href="tel:+78612132215">+7 (861) 213-22-15</a>.</p>
   </div>
 </section>
 
@@ -332,6 +376,11 @@ footer li{margin:7px 0}
   </div>
 </section>
 
+<div class="sticky-cta" id="stickyCta">
+  <a class="btn btn-wa" id="wa-sticky" href="#">Расчёт в WhatsApp</a>
+  <a class="btn btn-outline" href="tel:+79933205565">📞 Позвонить</a>
+</div>
+
 <footer>
   <div class="wrap">
     <div class="cols">
@@ -367,6 +416,17 @@ document.getElementById("wa-top").href=wa("Здравствуйте! Интер�
 document.getElementById("wa-hero").href=wa("Здравствуйте! Хочу получить расчёт погреба/бункера.");
 document.getElementById("wa-p1").href=wa("Здравствуйте! Интересует погреб из полипропилена. Пришлите расчёт.");
 document.getElementById("wa-p2").href=wa("Здравствуйте! Интересует погреб-бункер (укрытие). Обсудим задачу.");
+document.getElementById("wa-mid1").href=wa("Здравствуйте! Прочитал про полипропилен. Хочу расчёт под мой грунт и участок.");
+document.getElementById("wa-mid2").href=wa("Здравствуйте! Хочу начать с бесплатного расчёта погреба/бункера.");
+document.getElementById("wa-price").href=wa("Здравствуйте! Хочу расчёт погреба под мой размер и участок.");
+document.getElementById("wa-faq").href=wa("Здравствуйте! Вопрос по погребу/бункеру: ");
+document.getElementById("wa-sticky").href=wa("Здравствуйте! Интересует погреб/бункер из полипропилена. Подскажите по цене и срокам.");
+var sc=document.getElementById("stickyCta");
+window.addEventListener("scroll",function(){
+  var on=window.scrollY>600&&window.innerWidth<=600;
+  sc.classList.toggle("show",on);
+  document.body.classList.toggle("has-sticky",on);
+},{passive:true});
 document.getElementById("leadform").addEventListener("submit",function(e){
   e.preventDefault();
   var n=document.getElementById("f-name").value.trim(),
