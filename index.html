@@ -115,7 +115,7 @@ h2{font-size:clamp(26px,3.8vw,38px);font-weight:800;letter-spacing:-.7px;margin-
 .photo{border-radius:12px;background:linear-gradient(160deg,var(--copper-l),#f6f1e4);min-height:200px;display:flex;align-items:center;justify-content:center;color:#a29a80;font-size:14px;margin-bottom:20px;text-align:center;padding:12px;border:1px dashed var(--line-2)}
 .photo.has-img{padding:0;border:none;min-height:0;background:none;overflow:hidden;aspect-ratio:4/3}
 .photo.has-img img{width:100%;height:100%;object-fit:cover;display:block;object-position:50% 45%}
-.photo-bunk{width:100%;height:auto;border-radius:12px;display:block;margin-bottom:20px}
+.photo-full{width:100%;height:auto;border-radius:12px;display:block;margin-bottom:20px}
 ul.ticks{list-style:none;margin-top:10px}
 ul.ticks li{padding-left:26px;position:relative;margin:8px 0;color:var(--muted);font-size:15.5px}
 ul.ticks li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
@@ -275,7 +275,7 @@ footer li{margin:7px 0}
     </div>
     <div class="grid g2">
       <div class="card">
-        <div class="photo has-img"><img src="pogreb-vnutri.webp" alt="Погреб изнутри: полипропиленовые полки с заготовками" width="864" height="1184" loading="lazy" decoding="async"></div>
+        <img class="photo-full" src="pogreb-vnutri.webp" alt="Погреб изнутри: полипропиленовые полки с заготовками" width="864" height="1184" loading="lazy" decoding="async">
         <h3>🥕 Погреб из полипропилена</h3>
         <p>Полностью герметичное хранилище для дома и дачи. Не ржавеет как металл, не гниёт как дерево, не покрывается грибком как бетон.</p>
         <div class="price">от 158 900 ₽ <small>· размер 1,5 × 1,66 × 1,83 м</small></div>
@@ -289,7 +289,7 @@ footer li{margin:7px 0}
         <a class="mini-cta" id="wa-p1" href="#">Рассчитать мой погреб →</a>
       </div>
       <div class="card">
-        <img class="photo-bunk" src="pogreb-nary.webp" alt="Погреб-бункер изнутри: спальные места в два яруса и полки с запасами" width="768" height="1344" loading="lazy" decoding="async">
+        <img class="photo-full" src="pogreb-nary.webp" alt="Погреб-бункер изнутри: спальные места в два яруса и полки с запасами" width="768" height="1344" loading="lazy" decoding="async">
         <h3>🛡 Погреб-бункер (укрытие)</h3>
         <p>Усиленная конструкция: толстое армирование, рёбра жёсткости, тамбур, приточная вентиляция с возможностью автономии.</p>
         <div class="price">цена по расчёту <small>· под вашу задачу и участок</small></div>
