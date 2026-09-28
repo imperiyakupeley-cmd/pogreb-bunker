@@ -160,13 +160,13 @@ details p{color:var(--muted);margin-top:12px;font-size:15.5px;max-width:70ch}
 
 /* ── Форма ── */
 .section-form{background:var(--blue-deep)}
-.form-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.form-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
 .form-aside h2{color:#fff}
 .form-aside p{color:#bcd8e4;margin-bottom:20px;font-size:1.05rem}
 .aside-list{list-style:none}
 .aside-list li{padding:10px 0 10px 30px;position:relative;color:#cfe4ee;font-size:15.5px;border-bottom:1px solid rgba(255,255,255,.1)}
 .aside-list li::before{content:"✓";position:absolute;left:0;color:var(--copper-l2);font-weight:800}
-.form-box{background:#fff;border-radius:var(--r-card);padding:34px;box-shadow:var(--shadow-up)}
+.form-box{background:#fff;border-radius:var(--r-card);padding:28px;box-shadow:var(--shadow-up)}
 .form-box label{display:block;font-size:14px;font-weight:600;margin:15px 0 6px}
 .form-box input,.form-box select,.form-box textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line-2);border-radius:var(--r-input);font-size:16px;font-family:inherit;background:#fcfbf8;min-height:46px}
 .form-box input:focus,.form-box textarea:focus,.form-box select:focus{outline:2px solid var(--blue);border-color:var(--blue)}
@@ -229,6 +229,11 @@ footer li{margin:7px 0}
   .dark .card h3{font-size:15.5px}
   .dark .card p{font-size:13px;line-height:1.45}
   .dark .years{font-size:22px}
+  .aside-list{display:none}
+  .section-form{padding:40px 0}
+  .form-box{padding:20px 18px}
+  .form-box label{margin:10px 0 5px;font-size:13px}
+  .form-box input,.form-box select{padding:12px 13px;min-height:44px}
 }
 </style>
 </head>
@@ -399,8 +404,8 @@ footer li{margin:7px 0}
 <section class="section-form" id="zayavka">
   <div class="wrap form-wrap">
     <div class="form-aside">
-      <h2>Получить расчёт</h2>
-      <p>Заполните пару полей — менеджер пришлёт расчёт с ценой и сроком. Обычно отвечаем в течение часа в рабочее время (9:00–20:00 МСК).</p>
+      <h2>Получите расчёт за час</h2>
+      <p>Оставьте имя и телефон — вернёмся с ценой и сроком в течение часа (9:00–20:00 МСК). Бесплатно и ни к чему не обязывает.</p>
       <ul class="aside-list">
         <li>Расчёт под ваш участок и грунт</li>
         <li>Цена и срок фиксируются в договоре</li>
@@ -419,14 +424,12 @@ footer li{margin:7px 0}
           <option>Погреб-бункер (укрытие)</option>
           <option>Пока выбираю — нужна консультация</option>
         </select>
-        <label for="f-comment">Комментарий (размер, регион, грунтовые воды — что знаете)</label>
-        <textarea id="f-comment" rows="3" placeholder="Например: 2×3 м, участок в Подмосковье, грунтовые воды высоко"></textarea>
-        <div class="cta-row" style="margin-top:20px">
-          <button class="btn btn-wa" type="submit">Отправить в WhatsApp</button>
+        <div class="cta-row" style="margin-top:18px">
+          <button class="btn btn-wa" type="submit">Получить расчёт за час →</button>
           <a class="btn btn-outline" href="tel:+78612132215">📞 Позвонить</a>
         </div>
         <div class="ok-msg" id="okmsg">Заявка сформирована — открываем WhatsApp, осталось нажать «Отправить».</div>
-        <p class="note">Нажимая кнопку, вы отправляете сообщение в наш WhatsApp. Никакого спама — только ответ по вашей заявке.</p>
+        <p class="note">Кнопка откроет WhatsApp с готовым сообщением — без спама, только ответ по вашей заявке.</p>
       </form>
     </div>
   </div>
@@ -488,9 +491,8 @@ document.getElementById("leadform").addEventListener("submit",function(e){
   e.preventDefault();
   var n=document.getElementById("f-name").value.trim(),
       p=document.getElementById("f-phone").value.trim(),
-      w=document.getElementById("f-what").value,
-      c=document.getElementById("f-comment").value.trim();
-  var msg="Здравствуйте! Заявка с сайта (погреба/бункеры).\nИмя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w+(c?"\nКомментарий: "+c:"");
+      w=document.getElementById("f-what").value;
+  var msg="Здравствуйте! Заявка с сайта (погреба/бункеры).\nИмя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w;
   document.getElementById("okmsg").style.display="block";
   window.location.href=wa(msg);
 });
