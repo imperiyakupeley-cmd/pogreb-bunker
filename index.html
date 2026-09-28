@@ -130,10 +130,14 @@ ul.ticks li::before{content:"✓";position:absolute;left:0;color:var(--blue);fon
 .cross-sell a{font-weight:700;white-space:nowrap;color:var(--copper-l2)}
 
 /* ── Тёмная секция ── */
-.dark{background:var(--blue-deep);color:#fff;border-radius:0}
+.dark{background:var(--blue-deep);color:#fff;border-radius:0;padding:56px 0}
 .dark h2{color:#fff}
 .dark .lead{color:#bcd8e4}
-.dark .card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.13);box-shadow:none}
+.dark .sec-head{margin-bottom:24px}
+.dark .grid{gap:14px}
+.dark .card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.13);box-shadow:none;padding:16px 18px}
+.dark .card h3{font-size:17.5px;margin-bottom:6px}
+.dark .card p{font-size:14.5px;line-height:1.5}
 .dark .card p,.dark ul.ticks li{color:#cfe4ee}
 .years{display:block;font-size:clamp(28px,3vw,36px);font-weight:800;letter-spacing:-.8px;color:var(--copper-l2);margin:4px 0 10px}
 
@@ -254,7 +258,7 @@ footer li{margin:7px 0}
         <img class="hero-photo" src="pogreb-uchastok.webp" alt="Погреб из полипропилена после монтажа на участке" width="960" height="548" fetchpriority="high" decoding="async">
         <div class="hero-tag">
           <div class="p">от 158 900 ₽</div>
-          <div class="s">погреб 1,5 × 1,66 × 1,83 м</div>
+          <div class="s">погреб от 1,5 × 1,66 × 1,83 м</div>
         </div>
         <div class="hero-badge">Гарантия герметичности</div>
       </div>
@@ -282,7 +286,7 @@ footer li{margin:7px 0}
         <div class="photo-wrap"><img class="photo-full" src="pogreb-render.webp" alt="Погреб изнутри: полипропиленовые полки с заготовками" width="768" height="1344" loading="lazy" decoding="async"></div>
         <h3>🥕 Погреб из полипропилена</h3>
         <p>Полностью герметичное хранилище для дома и дачи. Не ржавеет как металл, не гниёт как дерево, не покрывается грибком как бетон.</p>
-        <div class="price">от 158 900 ₽ <small>· размер 1,5 × 1,66 × 1,83 м</small></div>
+        <div class="price">от 158 900 ₽ <small>· размер от 1,5 × 1,66 × 1,83 м</small></div>
         <ul class="ticks">
           <li>Стенки 10 мм, крышка с УФ-защитой</li>
           <li>Полки из того же полипропилена: не гниют и не ржавеют от сырости, размер — под ваши банки и ящики</li>
@@ -296,7 +300,7 @@ footer li{margin:7px 0}
         <div class="photo-wrap"><img class="photo-full" src="pogreb-nary.webp" alt="Погреб-бункер изнутри: спальные места в два яруса и полки с запасами" width="768" height="1344" loading="lazy" decoding="async"></div>
         <h3>🛡 Погреб-бункер (укрытие)</h3>
         <p>Усиленная конструкция: толстое армирование, рёбра жёсткости, тамбур, приточная вентиляция с возможностью автономии.</p>
-        <div class="price">от 320 000 ₽ <small>· размер 2 × 2 × 2,3 м</small></div>
+        <div class="price">от 320 000 ₽ <small>· размер от 2 × 2 × 2,3 м</small></div>
         <ul class="ticks">
           <li>Герметичный корпус, не боится грунтовых вод</li>
           <li>Внешнее армирование композитом при бетонировании</li>
@@ -317,17 +321,18 @@ footer li{margin:7px 0}
   <div class="wrap">
     <div class="sec-head">
       <h2>Почему полипропилен</h2>
-      <p class="lead">Материал, который мы варим уже больше восьми лет: те же технологии, что в наших бассейнах и купелях, проверенные тысячи раз.</p>
+      <p class="lead">Тот же материал, что в наших купелях и бассейнах: варим его больше восьми лет.</p>
     </div>
     <div class="grid g3">
-      <div class="card"><h3>💧 Абсолютная герметичность</h3><p>Корпус сварен монолитно — грунтовые и дождевые воды не пройдут внутрь. Осушать погреб после весны не придётся.</p></div>
-      <div class="card"><h3>⏳ Служба в земле</h3><span class="years">50–120 лет</span><p>Единственный враг пластика — ультрафиолет, а под землёй солнца нет. Не гниёт, не ржавеет, не требует ухода — поставили и забыли.</p></div>
-      <div class="card"><h3>🥗 Пищевой пластик</h3><p>Сертифицированный первичный полипропилен: безопасен для аллергиков и детей, заготовки без запаха и привкуса.</p></div>
+      <div class="card"><h3>💧 Абсолютная герметичность</h3><p>Корпус сварен монолитно — вода снаружи не пройдёт. Осушать погреб после весны не придётся.</p></div>
+      <div class="card"><h3>⏳ Служба в земле</h3><span class="years">50–120 лет</span><p>Под землёй нет ультрафиолета — единственного врага пластика. Не гниёт, не ржавеет.</p></div>
+      <div class="card"><h3>🥗 Пищевой пластик</h3><p>Сертифицированный первичный полипропилен: заготовки без запаха и привкуса.</p></div>
+      <div class="card"><h3>🧽 Лёгкость ухода</h3><p>Ни покраски, ни пропиток, ни борьбы с плесенью. Помыл из шланга — и всё.</p></div>
       <div class="card"><h3>🐁 Грызуны равнодушны</h3><p>Пластик не грызут мыши и крысы, в нём не заводится грибок и плесень.</p></div>
       <div class="card"><h3>⚡ Монтаж за день</h3><p>Без бетонирования — от 2 часов до одного дня. С бетонированием — 3–4 дня под ключ.</p></div>
-      <div class="card"><h3>🚚 Доставка по России</h3><p>Отправляем в любой регион: по югу и соседним областям — манипулятором, на дальние расстояния — автотранспортом. Способ и стоимость подберём под ваш город в расчёте.</p></div>
+      <div class="card"><h3>🚚 Доставка по России</h3><p>Отправляем в любой регион России. Способ и стоимость подберём под ваш город — в расчёте.</p></div>
     </div>
-    <div class="cta-band" style="margin-top:36px;border-radius:16px;border:1px solid var(--line-2)">
+    <div class="cta-band" style="margin-top:22px;border-radius:16px;border:1px solid var(--line-2)">
       <div class="wrap">
         <div>
           <h3>Убедились в материале? Узнайте цену под свой участок</h3>
@@ -356,7 +361,7 @@ footer li{margin:7px 0}
       <div class="wrap">
         <div>
           <h3>Начните с шага 1 — бесплатного расчёта</h3>
-          <p>Осень — удобный сезон для монтажа: грунт копается легко, без летней засухи и зимнего промерзания. Ответим в течение часа.</p>
+          <p>Напишите, что хотите хранить и в каком вы городе — вернёмся с ценой и сроком в течение часа. Это ни к чему не обязывает.</p>
         </div>
         <div class="acts">
           <a class="btn btn-wa" id="wa-mid2" href="#">Получить расчёт за час</a>
