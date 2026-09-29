@@ -429,7 +429,7 @@ footer li{margin:7px 0}
           <a class="btn btn-outline" href="tel:+78612132215">📞 Позвонить</a>
         </div>
         <div class="ok-msg" id="okmsg">Заявка сформирована — открываем WhatsApp, осталось нажать «Отправить».</div>
-        <p class="note">Кнопка откроет WhatsApp с готовым сообщением — без спама, только ответ по вашей заявке.</p>
+        <p class="note">Заявку получает менеджер сразу. На телефоне дополнительно откроется WhatsApp с готовым сообщением — без спама, только ответ по вашей заявке.</p>
       </form>
     </div>
   </div>
@@ -487,14 +487,76 @@ window.addEventListener("scroll",function(){
   sc.classList.toggle("show",on);
   document.body.classList.toggle("has-sticky",on);
 },{passive:true});
+
+/* ── Лиды в Битрикс24 (мост без сервера: sendBeacon напрямую) ──
+   B24 = URL узкого вебхука …/crm.lead.add.json. Пустая строка = интеграция
+   выключена (сайт живёт по-старому, только WhatsApp). Полный доступ сюда НЕ пойдёт
+   никогда — только узкий ключ с правом crm.lead.add. */
+var B24="";
+var SVETA="11898"; /* Светлана Иванова — ответственная за лиды с сайта */
+var IS_MOBILE=/Android|iPhone|iPad|Mobi/i.test(navigator.userAgent);
+function b24common(){
+  var f={"fields[SOURCE_ID]":"WEB","fields[ASSIGNED_BY_ID]":SVETA,
+         "fields[SOURCE_DESCRIPTION]":"Сайт погреба · pogreb.imperia-kupeley.ru"};
+  try{
+    new URLSearchParams(location.search).forEach(function(v,k){
+      if(/^utm_/i.test(k)) f["fields["+k.toUpperCase()+"]"]=v;
+    });
+  }catch(e){}
+  return f;
+}
+function b24send(fields){
+  if(!B24||!navigator.sendBeacon) return false;
+  try{
+    var s=Object.keys(fields).map(function(k){
+      return encodeURIComponent(k)+"="+encodeURIComponent(fields[k]);
+    }).join("&");
+    return navigator.sendBeacon(B24,new Blob([s],{type:"application/x-www-form-urlencoded"}));
+  }catch(e){ return false; }
+}
+/* Клик по каждой кнопке WhatsApp → лид-факт (дедуп: раз за сессию на кнопку) */
+var WA_BTNS={"wa-top":"шапка","wa-hero":"герой","wa-p1":"карточка погреба","wa-p2":"карточка бункера",
+             "wa-mid1":"полоса «почему ПП»","wa-mid2":"полоса шагов","wa-price":"FAQ цена",
+             "wa-faq":"FAQ вопрос","wa-sticky":"липкая панель"};
+Object.keys(WA_BTNS).forEach(function(id){
+  var el=document.getElementById(id); if(!el) return;
+  el.addEventListener("click",function(){
+    try{
+      if(sessionStorage.getItem("wa-sent-"+id)) return;
+      sessionStorage.setItem("wa-sent-"+id,"1");
+    }catch(e){}
+    var f=b24common();
+    f["fields[TITLE]"]="Сайт погреба — клик WhatsApp («"+WA_BTNS[id]+"»)";
+    f["fields[COMMENTS]"]="Клик по кнопке WhatsApp («"+WA_BTNS[id]+"») — клиент ушёл писать в мессенджер.\nСтраница: "+location.pathname+location.search+"\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп");
+    b24send(f);
+  });
+});
+/* Форма: лид уходит в Б24 ДО WhatsApp; на десктопе WA не дёргаем */
 document.getElementById("leadform").addEventListener("submit",function(e){
   e.preventDefault();
   var n=document.getElementById("f-name").value.trim(),
       p=document.getElementById("f-phone").value.trim(),
       w=document.getElementById("f-what").value;
-  var msg="Здравствуйте! Заявка с сайта (погреба/бункеры).\nИмя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w;
-  document.getElementById("okmsg").style.display="block";
-  window.location.href=wa(msg);
+  var f=b24common();
+  f["fields[TITLE]"]="Сайт погреба — заявка с формы";
+  f["fields[NAME]"]=n;
+  f["fields[PHONE][0][VALUE]"]=p;
+  f["fields[PHONE][0][VALUE_TYPE]"]="WORK";
+  f["fields[COMMENTS]"]="Имя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w+
+    "\nСтраница: "+location.pathname+location.search+"\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп");
+  b24send(f);
+  var ok=document.getElementById("okmsg");
+  if(IS_MOBILE){
+    ok.textContent="Заявка принята! Открываем WhatsApp — осталось нажать «Отправить».";
+    ok.style.display="block";
+    setTimeout(function(){
+      var msg="Здравствуйте! Заявка с сайта (погреба/бункеры).\nИмя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w;
+      window.location.href=wa(msg);
+    },350);
+  }else{
+    ok.textContent="Заявка принята! Перезвоним в течение часа (9:00–20:00 МСК).";
+    ok.style.display="block";
+  }
 });
 </script>
 </body>
