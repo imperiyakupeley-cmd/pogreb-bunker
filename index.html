@@ -186,7 +186,14 @@ details p{color:var(--muted);margin-top:12px;font-size:15.5px;max-width:70ch}
 .form-box input,.form-box select,.form-box textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line-2);border-radius:var(--r-input);font-size:16px;font-family:inherit;background:#fcfbf8;min-height:46px}
 .form-box input:focus,.form-box textarea:focus,.form-box select:focus{outline:2px solid var(--blue);border-color:var(--blue)}
 .note{font-size:13px;color:var(--muted);margin-top:12px}
-.ok-msg{display:none;background:#e3f2f8;border:1.5px solid #3ca2c2;color:#00425a;border-radius:10px;padding:14px 16px;font-weight:600;margin-top:14px}
+.consent{display:flex;gap:10px;align-items:flex-start;margin:16px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+.consent input{flex:none;width:18px;height:18px;margin-top:2px;accent-color:var(--blue)}
+.consent a{font-weight:600}
+.ok-msg{display:none;background:#e3f2f8;border:1.5px solid #3ca2c2;color:#00425a;border-radius:12px;padding:18px;margin-top:14px}
+.ok-title{font-weight:800;font-size:17px;margin-bottom:4px}
+.ok-msg p{font-size:14.5px;color:#0b4a63;font-weight:500}
+.ok-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.ok-acts .btn{padding:11px 18px;min-height:42px;font-size:14.5px}
 
 /* ── CTA-полосы ── */
 .cta-band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(160deg,var(--copper-l),#faf6ec)}
@@ -555,12 +562,20 @@ footer li{margin:7px 0}
           <option>Погреб-бункер (укрытие)</option>
           <option>Пока выбираю — нужна консультация</option>
         </select>
+        <label class="consent"><input type="checkbox" id="f-consent" required><span>Отправляя заявку, я даю <a href="/privacy#acp" target="_blank" rel="noopener">согласие на обработку персональных данных</a> и принимаю условия <a href="/privacy" target="_blank" rel="noopener">Политики конфиденциальности</a>.</span></label>
         <div class="cta-row" style="margin-top:18px">
           <button class="btn btn-wa" type="submit">Получить расчёт за час →</button>
           <a class="btn btn-outline" href="tel:+78612132215">📞 Позвонить</a>
         </div>
-        <div class="ok-msg" id="okmsg">Заявка сформирована — открываем WhatsApp, осталось нажать «Отправить».</div>
-        <p class="note">Заявку получает менеджер сразу. На телефоне дополнительно откроется WhatsApp с готовым сообщением — без спама, только ответ по вашей заявке.</p>
+        <div class="ok-msg" id="okmsg">
+          <div class="ok-title">✅ Заявка принята</div>
+          <p id="oktext"></p>
+          <div class="ok-acts">
+            <a class="btn btn-wa" id="ok-wa" href="#">Написать в WhatsApp сейчас</a>
+            <button type="button" class="btn btn-ghost" id="ok-close">Хорошо, жду связи</button>
+          </div>
+        </div>
+        <p class="note">Заявку получает менеджер сразу. Если не хотите писать сами — просто оставьте телефон: мы выйдем на связь сами. Без спама, только по вашей заявке.</p>
       </form>
     </div>
   </div>
@@ -593,10 +608,13 @@ footer li{margin:7px 0}
           <li><a href="#products">Бункеры-укрытия</a></li>
           <li><a href="#zayavka">Получить расчёт</a></li>
           <li><a href="https://imperia-kupeley.ru/" target="_blank" rel="noopener">Купели и бассейны ↗</a></li>
+          <li><a href="/privacy">Политика конфиденциальности</a></li>
+          <li><a href="/privacy#acp">Согласие на обработку ПД</a></li>
+          <li><a href="/privacy#adv">Согласие на рассылки</a></li>
         </ul>
       </div>
     </div>
-    <p class="disclaimer">© 2026 Империя Купелей. Погреба и бункеры не являются сооружениями гражданской обороны и не сертифицированы как ЗС ГО — это дачные хранилища и укрытия из полипропилена.</p>
+    <p class="disclaimer">© 2026 ИП Нагорный Алексей Михайлович · ИНН 753612745180 · ОГРНИП 317753600031856 · Краснодар. Погреба и бункеры не являются сооружениями гражданской обороны и не сертифицированы как ЗС ГО — это дачные хранилища и укрытия из полипропилена.</p>
   </div>
 </footer>
 
@@ -663,9 +681,12 @@ Object.keys(WA_BTNS).forEach(function(id){
     b24send(f);
   });
 });
-/* Форма: лид уходит в Б24 ДО WhatsApp; на десктопе WA не дёргаем */
+/* Форма: лид уходит в Б24 ДО WhatsApp; переход в WA — только по кнопке на экране успеха */
+function isNight(h){ if(h===undefined) h=new Date().getHours(); return h>=20||h<9; }
+var NIGHT=isNight();
 document.getElementById("leadform").addEventListener("submit",function(e){
   e.preventDefault();
+  if(!document.getElementById("f-consent").checked) return; /* required страхует, это дубль */
   var n=document.getElementById("f-name").value.trim(),
       p=document.getElementById("f-phone").value.trim(),
       w=document.getElementById("f-what").value;
@@ -675,20 +696,22 @@ document.getElementById("leadform").addEventListener("submit",function(e){
   f["fields[PHONE][0][VALUE]"]=p;
   f["fields[PHONE][0][VALUE_TYPE]"]="WORK";
   f["fields[COMMENTS]"]="Имя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w+
-    "\nСтраница: "+location.pathname+location.search+"\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп");
+    "\nСтраница: "+location.pathname+location.search+"\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп")+
+    (NIGHT?"\n⏰ Оставлено в нерабочее время — связаться утром, с 9:00":"");
+  if(NIGHT) f["fields[TITLE]"]="Сайт погреба — заявка с формы (ночь, связаться с 9:00)";
   b24send(f);
+  document.getElementById("oktext").textContent=NIGHT
+    ?"Сейчас нерабочее время. Заявка у нас — с 9:00 утра сами выйдем с вами на связь."
+    :"Перезвоним в течение часа (9:00–20:00 МСК).";
+  document.getElementById("ok-wa").href=wa("Здравствуйте! Заявка с сайта (погреба/бункеры).\nИмя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w);
   var ok=document.getElementById("okmsg");
-  if(IS_MOBILE){
-    ok.textContent="Заявка принята! Открываем WhatsApp — осталось нажать «Отправить».";
-    ok.style.display="block";
-    setTimeout(function(){
-      var msg="Здравствуйте! Заявка с сайта (погреба/бункеры).\nИмя: "+n+"\nТелефон: "+p+"\nИнтересует: "+w;
-      window.location.href=wa(msg);
-    },350);
-  }else{
-    ok.textContent="Заявка принята! Перезвоним в течение часа (9:00–20:00 МСК).";
-    ok.style.display="block";
-  }
+  ok.style.display="block";
+  ok.scrollIntoView({behavior:"smooth",block:"nearest"});
+});
+document.getElementById("ok-close").addEventListener("click",function(){
+  var ok=document.getElementById("okmsg");
+  ok.style.display="none";
+  document.getElementById("leadform").reset();
 });
 </script>
 </body>
