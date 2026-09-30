@@ -9,10 +9,48 @@
  * Логика лида: после 3 вопросов пользователя — ворота «укажите телефон»; телефон в
  * тексте сообщения (10+ цифр) засчитывается сразу. Каждый телефон → один лид Б24
  * «из чата с ИИ» с выжимкой диалога (дедуп через sessionStorage).
+ *
+ * Как только номер получен — в каждый запрос к эндпоинту дописывается служебная
+ * system-метка «телефон уже есть», чтобы ИИ не переспрашивал его и вёл к менеджеру.
  */
 const BTN = window.AI_BTN || 'A';
 const ENDPOINT = window.AI_ENDPOINT || 'https://ai.imperia-kupeley.ru/';
 const GATE_AFTER = 3;          // вопросов до ворот телефона
+
+/* ── Обёртка fetch: после получения телефона дописывать в запросы к эндпоинту
+ * system-метку «не переспрашивать номер». Всё остальное проходит как есть. ── */
+const rawFetch = window.fetch.bind(window);
+window.fetch = function (input, init) {
+  try {
+    const url  = typeof input === 'string' ? input : (input && input.url) || '';
+    const meth = ((init && init.method) || (input && input.method) || 'GET').toUpperCase();
+    if (!phoneKnown || meth !== 'POST' || url.indexOf(ENDPOINT) !== 0) return rawFetch(input, init);
+    const withMarker = (s) => {
+      const b = JSON.parse(s);
+      if (!b || !Array.isArray(b.messages)) return null;
+      b.messages.push({
+        role: 'system',
+        text: '[Служебная метка] Телефон клиента уже получен: ' + phoneKnown +
+          '. Менеджер уже уведомлён и свяжется сам (днём — в течение часа, вечером/ночью — с 9:00). ' +
+          'НЕ запрашивай и не переспрашивай телефон — продолжай консультировать по делу и мягко веди ' +
+          'к сделке или к общению с живым менеджером.'
+      });
+      return JSON.stringify(b);
+    };
+    if (init && typeof init.body === 'string') {
+      const nb = withMarker(init.body);
+      if (nb !== null) init = Object.assign({}, init, { body: nb });
+      return rawFetch(input, init);
+    }
+    if (input && typeof input === 'object' && typeof input.text === 'function') { // Request без init
+      return input.clone().text().then((s) => {
+        const nb = withMarker(s);
+        return rawFetch(url, { method: input.method, headers: input.headers, body: nb === null ? s : nb });
+      }).catch(() => rawFetch(input, init));
+    }
+  } catch (e) { /* любая ошибка — запрос уходит как есть */ }
+  return rawFetch(input, init);
+};
 
 document.body.classList.add(BTN === 'B' ? 'ai-btn-b' : 'ai-btn-a');
 
@@ -76,12 +114,13 @@ function submitGate() {
   if (digitsOf(v).length < 10) { gateErr.classList.add('show'); gatePhone.focus(); return; }
   gateErr.classList.remove('show');
   passed = true;
+  phoneKnown = v;
   sendLead(v, 'ворота после ' + GATE_AFTER + ' вопросов');
   gate.classList.remove('show');
 }
 
 /* ── Состояние диалога ── */
-let userTurns = 0, passed = false, loaded = false;
+let userTurns = 0, passed = false, loaded = false, phoneKnown = null;
 const transcript = []; // {role:'user'|'assistant', text}
 
 function onMsg(ev) {
@@ -95,6 +134,7 @@ function onMsg(ev) {
     if (!passed && d.length >= 10) {           // телефон назван в сообщении
       passed = true;
       const mm = m.text.match(/[\d+()\-\s]{7,}/); // фрагмент «как написан» — в лид
+      phoneKnown = mm ? mm[0].trim() : d;
       sendLead(mm ? mm[0].trim() : d, 'телефон в сообщении');
     } else if (!passed && userTurns >= GATE_AFTER) {
       gate.classList.add('show');
