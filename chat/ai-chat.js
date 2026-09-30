@@ -15,6 +15,7 @@
  */
 const BTN = window.AI_BTN || 'A';
 const ENDPOINT = window.AI_ENDPOINT || 'https://ai.imperia-kupeley.ru/';
+const LEAD_API = window.AI_LEAD_ENDPOINT || 'https://ai.imperia-kupeley.ru/lead.php';
 const GATE_AFTER = 3;          // вопросов до ворот телефона
 
 /* ── Обёртка fetch: после получения телефона дописывать в запросы к эндпоинту
@@ -121,6 +122,7 @@ function submitGate() {
 
 /* ── Состояние диалога ── */
 let userTurns = 0, passed = false, loaded = false, phoneKnown = null;
+let leadId = null, sentUpTo = 0, flushing = false; // для дописи продолжения в CRM
 const transcript = []; // {role:'user'|'assistant', text}
 
 function onMsg(ev) {
@@ -140,30 +142,82 @@ function onMsg(ev) {
       gate.classList.add('show');
     }
   }
+  /* длинный диалог после телефона — дописывать в CRM порциями */
+  if (phoneKnown && leadId && transcript.length - sentUpTo >= 4) flushUpdate();
 }
 
-/* ── Лид в Б24 (мост уже есть на странице: b24common/b24send) ── */
+/* ── Лид в Б24: через наш lead.php (возвращает ID, чтобы потом ДОПИСЫВАТЬ
+ * продолжение диалога в CRM). Если сервер недоступен — старый путь
+ * b24send-маяком (лид уйдёт, но без дописи). ── */
 function summarize() {
   return transcript.slice(-8).map(t =>
     (t.role === 'user' ? 'Клиент: ' : 'ИИ: ') + String(t.text).slice(0, 200)
   ).join('\n');
 }
+function utmOf() {
+  const o = {};
+  try { new URLSearchParams(location.search).forEach((v, k) => { if (/^utm_/i.test(k)) o[k.toUpperCase()] = v; }); } catch (e) {}
+  return o;
+}
 function sendLead(phoneDisplay, where) {
   const d = digitsOf(phoneDisplay);
-  if (!window.b24send || !window.b24common || !d) return;
+  if (!d) return;
   try {
     if (sessionStorage.getItem('ai-lead-' + d)) return;
     sessionStorage.setItem('ai-lead-' + d, '1');
   } catch (e) { /* приватный режим — дедуп пропускаем, лид шлём */ }
+  const platform = window.matchMedia('(max-width:600px)').matches ? 'мобильный' : 'десктоп';
+  const payload = {
+    mode: 'add',
+    phone: phoneDisplay,
+    where: where,
+    comments: 'Клиент оставил телефон в ИИ-чате (' + where + ').\n' +
+      'Выжимка диалога:\n' + summarize() + '\n' +
+      'Страница: ' + location.pathname + location.search + '\n' +
+      'Платформа: ' + platform,
+    page: location.pathname + location.search,
+    platform: platform,
+    utm: utmOf()
+  };
+  sentUpTo = transcript.length; // хвост после этой точки — кандидаты на допись
+  fetch(LEAD_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+    keepalive: true
+  }).then(r => r.ok ? r.json() : null).then(j => {
+    if (j && j.id) leadId = j.id;
+    else legacyLead(payload);
+  }).catch(() => legacyLead(payload));
+}
+/* фолбэк: прямой маяк вебхуком со страницы (как до lead.php) */
+function legacyLead(payload) {
+  if (!window.b24send || !window.b24common) return;
   const f = window.b24common();
   f['fields[TITLE]'] = 'Сайт погреба — телефон из чата с ИИ';
-  f['fields[PHONE][0][VALUE]'] = phoneDisplay;
+  f['fields[PHONE][0][VALUE]'] = payload.phone;
   f['fields[PHONE][0][VALUE_TYPE]'] = 'WORK';
-  f['fields[COMMENTS]'] = 'Клиент оставил телефон в ИИ-чате (' + where + ').\n' +
-    'Выжимка диалога:\n' + summarize() + '\n' +
-    'Страница: ' + location.pathname + location.search + '\n' +
-    'Платформа: ' + (window.matchMedia('(max-width:600px)').matches ? 'мобильный' : 'десктоп');
+  f['fields[COMMENTS]'] = payload.comments;
   window.b24send(f);
+}
+/* допись продолжения диалога в лид CRM */
+function flushUpdate() {
+  if (!phoneKnown || !leadId || flushing) return;
+  const tail = transcript.slice(sentUpTo);
+  if (!tail.length) return;
+  const text = tail.map(t =>
+    (t.role === 'user' ? 'Клиент: ' : 'ИИ: ') + String(t.text).slice(0, 200)
+  ).join('\n');
+  const pos = sentUpTo;
+  sentUpTo = transcript.length;
+  flushing = true;
+  fetch(LEAD_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mode: 'update', id: leadId, append: text }),
+    keepalive: true
+  }).then(() => { flushing = false; })
+    .catch(() => { flushing = false; sentUpTo = pos; }); // при сбое повторим следующим триггером
 }
 
 /* ── Ленивая загрузка deep-chat и настройка элемента ── */
@@ -204,4 +258,8 @@ function closePanel() {
   panel.classList.remove('open');
   fab.hidden = false;
   document.body.style.overflow = '';
+  flushUpdate(); // ушёл из чата — дописать хвост диалога в CRM
 }
+/* уход со страницы / сворачивание таба — последний шанс дописать диалог */
+window.addEventListener('pagehide', flushUpdate);
+document.addEventListener('visibilitychange', () => { if (document.hidden) flushUpdate(); });
