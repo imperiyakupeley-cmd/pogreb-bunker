@@ -174,6 +174,10 @@ async function ensureChat() {
   await customElements.whenDefined('deep-chat');
   const el = document.createElement('deep-chat');
   el.connect = { url: ENDPOINT };
+  // requestBodyLimits (СВОЙСТВО ЭЛЕМЕНТА, не внутри connect): без него deep-chat
+  // 2.5.1 шлёт ТОЛЬКО последнее сообщение (processMessages в бандле) — ИИ терял бы
+  // контекст диалога. 12 = столько же, сколько режет PHP-эндпоинт (array_slice -12).
+  el.requestBodyLimits = { maxMessages: 12 };
   // в deep-chat 2.x интро = history с одним сообщением ассистента
   // (верхнеуровневый introMessage в 2.5.1 не отрисовывается при connect)
   el.history = [{ role: 'assistant', text: 'Здравствуйте! Помогу выбрать погреб или бункер: ' +
