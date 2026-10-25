@@ -128,6 +128,11 @@ h2{font-size:clamp(26px,3.8vw,38px);font-weight:800;letter-spacing:-.7px;margin-
 .photo-wrap{position:relative;width:100%;padding-top:133.33%;margin-bottom:20px}
 .photo-wrap .photo-full{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;border-radius:12px;display:block}
 .photo-band{margin:28px 0 0}.photo-band img{width:100%;height:auto;border-radius:12px;display:block}.photo-band figcaption{font-size:13.5px;color:var(--muted);text-align:center;margin-top:8px}
+.works-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.work-tile{position:relative;padding-top:62.5%;border-radius:12px;overflow:hidden;background:#efe9dc}
+.work-tile img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block}
+.work-tile.wide{grid-column:span 2}
+.case-note{font-size:13.5px;color:var(--muted);text-align:center;margin-top:10px}
 ul.ticks{list-style:none;margin-top:10px}
 ul.ticks li{padding-left:26px;position:relative;margin:8px 0;color:var(--muted);font-size:15.5px}
 ul.ticks li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
@@ -517,6 +522,23 @@ footer li{margin:7px 0}
           <a class="tel-link" href="tel:+78612132215">📞 +7 (861) 213-22-15</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="raboty" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>Наши работы</h2><p class="lead">Живые монтажи, а не картинки из каталога: от котлована до готового участка.</p></div>
+    <div class="card">
+      <h3>Погреб в Анапе, Краснодарский край</h3>
+      <div class="works-grid">
+        <div class="work-tile"><img src="anapa-1.webp" alt="Котлован под погреб на участке в Анапе" width="1280" height="721" loading="lazy" decoding="async"></div>
+        <div class="work-tile"><img src="anapa-2.webp" alt="Погреб опускают в котлован манипулятором" width="1280" height="721" loading="lazy" decoding="async"></div>
+        <div class="work-tile"><img src="anapa-3.webp" alt="Этап монтажа погреба на участке в Анапе" width="1280" height="721" loading="lazy" decoding="async"></div>
+        <div class="work-tile"><img src="anapa-4.webp" alt="Этап монтажа погреба на участке в Анапе" width="1280" height="721" loading="lazy" decoding="async"></div>
+        <div class="work-tile wide"><img src="anapa-5.webp" alt="Готовый погреб с посаженным газоном после монтажа (Анапа)" width="1280" height="731" loading="lazy" decoding="async"></div>
+      </div>
+      <p class="case-note">Последний кадр — тот же погреб с уже посаженным газоном.</p>
     </div>
   </div>
 </section>
