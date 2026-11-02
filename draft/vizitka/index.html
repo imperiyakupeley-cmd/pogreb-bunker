@@ -4,98 +4,203 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Алексей Нагорный — Империя Купелей</title>
-<meta name="description" content="Электронная визитка Алексея Нагорного, основателя производства «Империя Купелей»: купели, бассейны, погреба и укрытия. Контакты, сайты, соцсети.">
+<meta name="description" content="Электронная визитка Алексея Нагорного, основателя производства «Империя Купелей»: купели, бассейны, погреба и укрытия. Сохраните контакт в одно касание.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="../../sign-white.svg" type="image/svg+xml">
-<meta name="theme-color" content="#0e1618">
+<meta name="theme-color" content="#0c110d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0e1618; --card:#16221f; --card-2:#1a2724;
-  --cream:#f5efe6; --cream-dim:#c9c2b4; --muted:#8f9a8f;
-  --copper:#c89b6a; --copper-l:#d9b38c;
-  --green:#2e5e4e; --line:rgba(245,239,230,.12); --line-2:rgba(200,155,106,.35);
+  --bg:#0c110d; --card:#1a221b; --card-2:#212a20;
+  --cream:#f2eee3; --cream-dim:#c8c5b5; --muted:#8e998c;
+  --gold:#b48759; --gold-l:#d5ae80; --gold-d:#6a4a2b;
+  --line:rgba(242,238,227,.10); --line-g:rgba(180,135,89,.40);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:radial-gradient(1100px 560px at 50% -160px,rgba(200,155,106,.17),transparent 62%),radial-gradient(900px 540px at 108% 112%,rgba(0,117,153,.22),transparent 58%),radial-gradient(760px 760px at -14% 34%,rgba(0,74,102,.20),transparent 55%),linear-gradient(168deg,#112022 0%,#0e1618 46%,#0b1a1e 100%);background-attachment:fixed;color:var(--cream);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;align-items:center;-webkit-font-smoothing:antialiased;position:relative}
-/* водная линия — повторяющиеся синус-волны (голубая + медная) */
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='168' viewBox='0 0 560 168'%3E%3Cg fill='none' stroke-width='1.3'%3E%3Cpath d='M0 84 Q70 46 140 84 T280 84 T420 84 T560 84' stroke='%23007599' stroke-opacity='.075'/%3E%3Cpath d='M0 84 Q70 122 140 84 T280 84 T420 84 T560 84' stroke='%23007599' stroke-opacity='.05'/%3E%3Cpath d='M0 84 Q70 62 140 84 T280 84 T420 84 T560 84' stroke='%23c89b6a' stroke-opacity='.05' transform='translate(0 42)'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:560px 168px}
-/* мелкое зерно — убирает «плоскость» фона */
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(1000px 520px at 50% -170px,rgba(180,135,89,.16),transparent 62%),
+    radial-gradient(820px 520px at 110% 108%,rgba(92,103,95,.20),transparent 58%),
+    linear-gradient(170deg,#151c15 0%,#0c110d 52%,#090d0a 100%);
+  background-attachment:fixed;color:var(--cream);line-height:1.6;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;-webkit-font-smoothing:antialiased;position:relative}
+/* мелкое зерно — глубина фона */
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.card{position:relative;z-index:2}
-.draftbar{position:sticky;top:0;z-index:100;background:#00425a;color:#fff;text-align:center;font-size:12.5px;padding:7px 12px;font-weight:600;width:100%}
-.card{width:100%;max-width:480px;padding:0 20px 40px}
-.head{position:relative;text-align:center;padding:40px 0 8px}
-/* круги на воде — расходятся от знака */
-.head .ripple{position:absolute;left:50%;top:71px;width:130px;height:130px;transform:translate(-50%,-50%);pointer-events:none}
-.head .ripple span{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(200,155,106,.45);opacity:0;animation:ripple 7s linear infinite}
-.head .ripple span:nth-child(2){border-color:rgba(0,117,153,.40);animation-delay:2.33s}
-.head .ripple span:nth-child(3){animation-delay:4.66s}
-@keyframes ripple{0%{transform:scale(.30);opacity:.6}70%{opacity:.14}100%{transform:scale(1);opacity:0}}
-@media (prefers-reduced-motion:reduce){.head .ripple span{animation:none;opacity:.18}}
-.head .mark{position:relative;z-index:1;width:52px;height:62px;margin:0 auto 14px}
-.head .brand{font-size:11px;font-weight:700;letter-spacing:.3em;color:var(--copper-l);text-transform:uppercase}
-.head h1{font-family:'Playfair Display',Georgia,serif;font-size:2.35rem;font-weight:700;margin:10px 0 6px;letter-spacing:.01em}
-.head .role{color:var(--cream-dim);font-size:15px}
-.head .role b{color:var(--cream)}
-.facts{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:18px 0 26px}
-.facts span{border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:12px;color:var(--muted);letter-spacing:.03em;background:rgba(22,34,31,.55)}
-.links{display:flex;flex-direction:column;gap:11px}
-.lnk{display:flex;align-items:center;gap:15px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;text-decoration:none;color:var(--cream);transition:border-color .15s}
-.lnk:active{border-color:var(--line-2)}
-.lnk svg{flex:none;width:26px;height:26px;stroke:var(--copper-l);fill:none;stroke-width:1.6}
-.lnk .t b{display:block;font-size:15.5px;letter-spacing:.01em}
+.wrap{position:relative;z-index:2;width:100%;max-width:480px;padding:0 20px 46px}
+.draftbar{position:sticky;top:0;z-index:100;background:#3d3423;color:#fff;text-align:center;font-size:12.5px;padding:7px 12px;font-weight:600;width:100%}
+/* ── шапка ── */
+.head{text-align:center;padding:36px 0 4px}
+.head .mark{width:54px;height:64px;margin:0 auto 14px}
+.head .brand{font-size:11px;font-weight:700;letter-spacing:.34em;color:var(--gold-l);text-transform:uppercase}
+.head .sub{color:var(--cream-dim);font-size:13.5px;margin-top:6px}
+.head h1{font-family:'Playfair Display',Georgia,serif;font-size:2.3rem;font-weight:700;margin:14px 0 4px;letter-spacing:.01em}
+.head .role{color:var(--muted);font-size:14.5px}
+.head .role b{color:var(--cream-dim)}
+/* ── hero-фото ── */
+.hero{margin:24px 0 0;position:relative}
+.hero img{display:block;width:100%;aspect-ratio:4/4.6;object-fit:cover;border-radius:22px;border:1px solid var(--line-g);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.hero::after{content:'';position:absolute;inset:0;border-radius:22px;background:linear-gradient(180deg,transparent 46%,rgba(9,13,10,.55) 78%,rgba(9,13,10,.82) 100%);pointer-events:none}
+.hero .cap{position:absolute;left:18px;right:18px;bottom:16px;z-index:2}
+.hero .cap .motto{font-size:10.5px;font-weight:800;letter-spacing:.3em;color:var(--gold-l);text-transform:uppercase}
+.hero .cap p{font-family:'Playfair Display',Georgia,serif;font-size:1.22rem;line-height:1.35;margin-top:5px;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+/* ── главные кнопки ── */
+.cta{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:16px 20px;text-decoration:none;font-weight:800;font-size:15.5px;letter-spacing:.01em;transition:transform .12s}
+.btn:active{transform:scale(.985)}
+.btn svg{width:21px;height:21px;flex:none}
+.btn-gold{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#1c130a;box-shadow:0 12px 30px rgba(180,135,89,.30)}
+.btn-gold svg{stroke:#1c130a;fill:none;stroke-width:2}
+.btn-ghost{border:1.5px solid var(--line-g);color:var(--gold-l)}
+.btn-ghost svg{stroke:var(--gold-l);fill:none;stroke-width:1.8}
+.btn .s{display:block;font-size:11.5px;font-weight:600;opacity:.75;letter-spacing:.02em}
+.btn .col{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+/* ── факты ── */
+.facts{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:22px 0 0}
+.facts span{border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:12px;color:var(--muted);letter-spacing:.03em;background:rgba(26,34,27,.55)}
+/* ── разделитель ── */
+.div{height:1px;margin:30px 0;background:linear-gradient(90deg,transparent,var(--line-g) 30%,var(--line-g) 70%,transparent)}
+.div.mid{margin:26px 0}
+/* ── карточки направлений ── */
+.sec-t{text-align:center;font-family:'Playfair Display',Georgia,serif;font-size:1.42rem;margin-bottom:16px}
+.cards{display:flex;flex-direction:column;gap:14px}
+.dir{display:block;text-decoration:none;color:var(--cream);background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:border-color .15s}
+.dir:active{border-color:var(--line-g)}
+.dir .ph{position:relative}
+.dir .ph img{display:block;width:100%;aspect-ratio:16/9.4;object-fit:cover}
+.dir .ph::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(12,17,13,.5) 100%)}
+.dir .row{display:flex;align-items:center;gap:12px;padding:14px 16px 15px}
+.dir .row b{font-family:'Playfair Display',Georgia,serif;font-size:1.18rem;font-weight:700}
+.dir .row span{display:block;font-size:12.5px;color:var(--muted);margin-top:1px}
+.dir .go{margin-left:auto;color:var(--gold-l);font-size:19px;opacity:.85}
+/* ── преимущества ── */
+.adv{display:flex;gap:10px;margin-top:4px}
+.adv div{flex:1;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 8px 13px}
+.adv svg{width:26px;height:26px;stroke:var(--gold-l);fill:none;stroke-width:1.5;margin:0 auto 8px;display:block}
+.adv b{display:block;font-size:12px;line-height:1.35;font-weight:700}
+/* ── доверие ── */
+.trust{text-align:center;padding:2px 10px 0}
+.trust .big{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;line-height:1.4}
+.trust .big em{color:var(--gold-l);font-style:normal}
+.trust p{font-size:13px;color:var(--muted);margin-top:4px}
+/* ── контакты ── */
+.links{display:flex;flex-direction:column;gap:10px}
+.lnk{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 17px;text-decoration:none;color:var(--cream)}
+.lnk:active{border-color:var(--line-g)}
+.lnk svg{flex:none;width:25px;height:25px;stroke:var(--gold-l);fill:none;stroke-width:1.6}
+.lnk .t b{display:block;font-size:15px}
 .lnk .t span{display:block;font-size:12.5px;color:var(--muted);margin-top:1px}
-.lnk .go{margin-left:auto;color:var(--copper-l);font-size:18px;opacity:.7}
-.save{margin-top:13px;display:flex;align-items:center;justify-content:center;gap:11px;background:linear-gradient(135deg,var(--copper-l),var(--copper));color:#181110;font-weight:800;font-size:15.5px;text-decoration:none;border-radius:16px;padding:17px;letter-spacing:.02em;box-shadow:0 10px 28px rgba(200,155,106,.25)}
-.save svg{width:22px;height:22px;stroke:#181110;fill:none;stroke-width:2}
-.about{margin-top:26px;border-top:1px solid var(--line);padding-top:20px;text-align:center}
-.about b{display:block;font-size:14px;color:var(--copper-l);letter-spacing:.14em;text-transform:uppercase;font-size:11.5px;margin-bottom:8px}
-.about p{font-size:13.5px;color:var(--muted);max-width:38ch;margin:0 auto}
-.foot{margin-top:22px;font-size:12px;color:var(--muted);text-align:center}
+.lnk .go{margin-left:auto;color:var(--gold-l);opacity:.7}
+/* ── каталог ── */
+.sites{display:flex;gap:10px}
+.sites a{flex:1;text-align:center;border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-decoration:none;color:var(--cream-dim);font-size:12.5px;line-height:1.45;background:rgba(26,34,27,.4)}
+.sites a b{display:block;color:var(--cream);font-size:13px;margin-bottom:2px}
+/* ── подвал ── */
+.foot{text-align:center;font-size:12.5px;color:var(--muted);line-height:1.75}
+.foot .soc{display:flex;justify-content:center;gap:9px;margin:14px 0 16px}
+.foot .soc a{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--line-g);text-decoration:none}
+.foot .soc svg{width:19px;height:19px;stroke:var(--gold-l);fill:none;stroke-width:1.6}
 .foot a{color:var(--muted)}
-@media(min-width:480px){.head h1{font-size:2.6rem}}
+.foot .dot{color:var(--gold);margin:0 6px}
 </style>
 </head>
 <body>
 <div class="draftbar">✏️ ЧЕРНОВИК — визитка на проверке. Финальный адрес будет после одобрения.</div>
-<div class="card">
+<div class="wrap">
+
   <div class="head">
-    <div class="ripple" aria-hidden="true"><span></span><span></span><span></span></div>
     <img class="mark" src="../../sign-white.svg" alt="Империя Купелей">
     <div class="brand">Империя Купелей</div>
+    <div class="sub">Производство купелей, бассейнов и погребов</div>
     <h1>Алексей Нагорный</h1>
     <div class="role"><b>Основатель производства</b> · Краснодар</div>
   </div>
+
+  <div class="hero">
+    <img src="photos/hero.webp" alt="Вечерний отдых: купель с подсветкой у дома">
+    <div class="cap">
+      <div class="motto">Отдых · Комфорт · Уверенность</div>
+      <p>Роскошный отдых на природе —<br>на долгие годы</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <a class="btn btn-gold" href="aleksey.vcf" download="Aleksey-Nagornyy.vcf">
+      <svg viewBox="0 0 24 24"><path d="M12 3v11M7 9.5l5 5 5-5M4 21h16"/></svg>
+      <span class="col"><span>Сохранить контакт в 1 касание</span><span class="s">Алексей Нагорный · телефон, сайты, соцсети</span></span>
+    </a>
+    <a class="btn btn-ghost" href="tel:+78612132215">
+      <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+      <span class="col"><span>Позвонить</span><span class="s">+7 (861) 213-22-15 · ежедневно 9:00–20:00 МСК</span></span>
+    </a>
+  </div>
+
   <div class="facts">
     <span>собственное производство</span>
     <span>&gt;3000 изделий</span>
     <span>8 лет на рынке</span>
   </div>
+
+  <div class="div"></div>
+
+  <div class="sec-t">Что мы производим</div>
+  <div class="cards">
+    <a class="dir" href="https://imperia-kupeley.ru/">
+      <div class="ph"><img src="photos/kupeli.webp" alt="Деревянная купель на гальке в саду" loading="lazy"></div>
+      <div class="row">
+        <div><b>Купели</b><span>из полипропилена и нержавеющей стали</span></div>
+        <span class="go">→</span>
+      </div>
+    </a>
+    <a class="dir" href="https://imperia-kupeley.ru/">
+      <div class="ph"><img src="photos/basseyn.webp" alt="Семейный бассейн на закате" loading="lazy"></div>
+      <div class="row">
+        <div><b>Бассейны</b><span>для дома и улицы, под ключ</span></div>
+        <span class="go">→</span>
+      </div>
+    </a>
+    <a class="dir" href="https://pogreb.imperia-kupeley.ru/">
+      <div class="ph"><img src="photos/pogreba.webp" alt="Погреб с аккуратным люком в газоне" loading="lazy"></div>
+      <div class="row">
+        <div><b>Погреба и укрытия</b><span>из полипропилена — каталог и цены</span></div>
+        <span class="go">→</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="adv">
+    <div>
+      <svg viewBox="0 0 24 24"><path d="M3 21V10l9-6 9 6v11M8 21v-6h8v6"/></svg>
+      <b>Собственное производство</b>
+    </div>
+    <div>
+      <svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4.8-3 8-7 9-4-1-7-4.2-7-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+      <b>Премиальные материалы</b>
+    </div>
+    <div>
+      <svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+      <b>Доставка по всей России</b>
+    </div>
+  </div>
+
+  <div class="div mid"></div>
+
+  <div class="trust">
+    <div class="big">Нам доверяют <em>тысячи клиентов</em></div>
+    <p>более 3000 изделий произведено за 8 лет</p>
+  </div>
+
+  <div class="div mid"></div>
+
   <div class="links">
     <a class="lnk" href="https://wa.me/79933205565">
       <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
       <div class="t"><b>WhatsApp — самый быстрый ответ</b><span>+7 993 320-55-65 · также TG и Max</span></div>
-      <span class="go">→</span>
-    </a>
-    <a class="lnk" href="tel:+78612132215">
-      <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
-      <div class="t"><b>Позвонить</b><span>+7 (861) 213-22-15 · ежедневно 9:00–20:00 МСК</span></div>
-      <span class="go">→</span>
-    </a>
-    <a class="lnk" href="https://imperia-kupeley.ru/">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
-      <div class="t"><b>imperia-kupeley.ru</b><span>купели, бассейны, изделия из нержавеющей стали</span></div>
-      <span class="go">→</span>
-    </a>
-    <a class="lnk" href="https://pogreb.imperia-kupeley.ru/">
-      <svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
-      <div class="t"><b>pogreb.imperia-kupeley.ru</b><span>погреба и укрытия из полипропилена</span></div>
       <span class="go">→</span>
     </a>
     <a class="lnk" href="https://t.me/imperiya_kupeley">
@@ -109,15 +214,27 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opac
       <span class="go">→</span>
     </a>
   </div>
-  <a class="save" href="aleksey.vcf" download="Aleksey-Nagornyy.vcf">
-    <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>
-    Сохранить контакт в телефон
-  </a>
-  <div class="about">
-    <b>Что мы производим</b>
-    <p>Купели, бассейны, погреба и укрытия из полипропилена, изделия из нержавеющей стали — от производителя, с доставкой по всей России.</p>
+
+  <div class="div mid"></div>
+
+  <div class="sites">
+    <a href="https://imperia-kupeley.ru/"><b>imperia-kupeley.ru</b>купели и бассейны</a>
+    <a href="https://pogreb.imperia-kupeley.ru/"><b>Каталог погребов</b>pogreb.imperia-kupeley.ru</a>
   </div>
-  <div class="foot">Производство: Краснодар, Новая, 33/21<br>© Империя Купелей</div>
+
+  <div class="div"></div>
+
+  <div class="foot">
+    <div class="soc">
+      <a href="https://t.me/imperiya_kupeley" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21 4L3 11l6 2.5L11.5 20 14 15.5 20 17z"/></svg></a>
+      <a href="https://vk.com/imperiya_kupeley" aria-label="ВКонтакте"><svg viewBox="0 0 24 24"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg></a>
+      <a href="https://wa.me/79933205565" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg></a>
+    </div>
+    Краснодарский край, посёлок Южный, ул. Новая, 33/21<br>
+    Ежедневно 9:00–20:00 МСК<span class="dot">·</span><a href="tel:+78612132215">+7 (861) 213-22-15</a><br>
+    © Империя Купелей
+  </div>
+
 </div>
 </body>
 </html>
