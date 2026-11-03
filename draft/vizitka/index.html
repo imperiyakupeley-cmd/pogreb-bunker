@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Алексей Нагорный — Империя Купелей</title>
-<meta name="description" content="Электронная визитка Алексея Нагорного, основателя производства «Империя Купелей»: купели, бассейны, погреба и укрытия. Сохраните контакт в одно касание.">
+<title>Империя Купелей — электронная визитка</title>
+<meta name="description" content="Электронная визитка компании «Империя Купелей»: купели, бассейны, погреба и укрытия. Напишите нам в мессенджере или позвоните — ежедневно 9:00–20:00.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="../../sign-white.svg" type="image/svg+xml">
 <meta name="theme-color" content="#141518">
@@ -79,6 +79,23 @@ section{padding:26px 0 0}
 .cta1{display:flex;flex-direction:column;gap:10px}
 .cta2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 
+/* ── большие кнопки с меню внутри ── */
+.big{display:block;border-radius:16px;overflow:hidden;border:1px solid var(--line-g);background:var(--bg-2)}
+.big>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:11px;padding:16px 18px;font-weight:800;font-size:15px;-webkit-tap-highlight-color:transparent}
+.big>summary::-webkit-details-marker{display:none}
+.big>summary svg{width:20px;height:20px;flex:none;stroke:var(--gold-l);fill:none;stroke-width:1.8}
+.big .chv{margin-left:auto;color:var(--gold-l);font-size:17px;font-weight:800;line-height:1;transition:transform .18s}
+.big[open]>summary .chv{transform:rotate(90deg)}
+.big .sub{display:block;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.01em;margin-top:1px}
+.big-gold>summary{background:linear-gradient(135deg,var(--gold-l),var(--gold-d));color:#171204;box-shadow:0 12px 30px rgba(217,164,65,.22)}
+.big-gold>summary svg{stroke:#171204;stroke-width:2}
+.big-gold .sub{color:rgba(23,18,4,.66)}
+.big-gold .chv{color:#171204}
+.big .menu{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:2px 12px 14px}
+.big .menu a{display:flex;flex-direction:column;align-items:center;gap:6px;padding:13px 8px 11px;border:1px solid var(--line-g2);border-radius:12px;text-decoration:none;color:var(--text);font-weight:800;font-size:12px}
+.big .menu a svg{width:22px;height:22px;stroke:var(--gold-l);fill:none;stroke-width:1.7}
+.big .menu a span{font-size:9.5px;color:var(--muted);font-weight:600}
+
 /* ── капсула доверия ── */
 .trust{display:flex;align-items:center;border:1px solid var(--line-g);border-radius:999px;padding:12px 18px;gap:14px}
 .trust .l{display:flex;align-items:center;gap:10px;flex:none}
@@ -125,7 +142,7 @@ footer{margin-top:30px;border-top:1px solid var(--line-g2);padding:22px 0 0;back
   <img src="photos/hero.webp" alt="Вечерний отдых: купель с подсветкой у дома">
   <div class="ov"></div>
   <div class="cap">
-    <div class="eyebrow">Алексей Нагорный · основатель производства</div>
+    <div class="eyebrow">Империя Купелей · собственное производство</div>
     <h1>Дарим счастье<br><span class="grad">через изделия</span></h1>
     <div class="sub">Отдых, комфорт и уверенность на долгие годы</div>
     <div class="ln"></div>
@@ -170,29 +187,49 @@ footer{margin-top:30px;border-top:1px solid var(--line-g2);padding:22px 0 0;back
   </section>
 
   <section>
-    <div class="sec-cap">Связаться с Алексеем</div>
+    <div class="sec-cap">Связаться с нами</div>
     <div class="cta1">
-      <a class="btn btn-gold" href="aleksey.vcf" download="Aleksey-Nagornyy.vcf">
-        <svg viewBox="0 0 24 24"><path d="M12 3v11M7 9.5l5 5 5-5M4 21h16"/></svg>
-        <span class="col"><span>Сохранить контакт в 1 касание</span><span class="s">телефон, сайты и соцсети — в записную книгу</span></span>
-      </a>
-    </div>
-    <div class="cta2">
+      <details class="big big-gold">
+        <summary>
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="col"><span>Написать нам</span><span class="sub">выберите мессенджер — ответим быстро</span></span>
+          <span class="chv">›</span>
+        </summary>
+        <div class="menu">
+          <a href="https://wa.me/79933205565">
+            <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
+            WhatsApp<span>чат с компанией</span>
+          </a>
+          <a href="https://vk.me/imperiya_kupeley">
+            <svg viewBox="0 0 24 24"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
+            ВКонтакте<span>сообщения сообщества</span>
+          </a>
+        </div>
+      </details>
       <a class="btn btn-out" href="tel:+78612132215">
         <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
-        Позвонить
+        <span class="col"><span>Позвонить</span><span class="s">ежедневно 9:00–20:00, быстрая связь</span></span>
       </a>
-      <a class="btn btn-out" href="https://wa.me/79933205565">
-        <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
-        WhatsApp
-      </a>
-      <a class="btn btn-out" href="https://t.me/imperiya_kupeley">
-        <svg viewBox="0 0 24 24"><path d="M21 4L3 11l6 2.5L11.5 20 14 15.5 20 17z"/></svg>
-        Telegram
-      </a>
-      <a class="btn btn-out" href="https://vk.com/imperiya_kupeley">
-        <svg viewBox="0 0 24 24"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
-        ВКонтакте
+      <details class="big">
+        <summary>
+          <svg viewBox="0 0 24 24"><path d="M10.2 13.8a7 7 0 0 0 3 2l1.4-1.4 4 1.6.8 2.6a1.6 1.6 0 0 1-1.7 2A16.5 16.5 0 0 1 4.4 6.3 1.6 1.6 0 0 1 6.4 4.6l2.6.8 1.6 4z" transform="translate(1.5 1.5) scale(.9)"/><path d="M4 11.5A8.5 8.5 0 0 0 12.5 20"/><path d="M4 7a12.5 12.5 0 0 1 13 13"/></svg>
+          <span class="col"><span>Подписаться на нас</span><span class="sub">новости, изделия, наши работы</span></span>
+          <span class="chv">›</span>
+        </summary>
+        <div class="menu">
+          <a href="https://t.me/imperiya_kupeley">
+            <svg viewBox="0 0 24 24"><path d="M21 4L3 11l6 2.5L11.5 20 14 15.5 20 17z"/></svg>
+            Telegram<span>канал компании</span>
+          </a>
+          <a href="https://vk.com/imperiya_kupeley">
+            <svg viewBox="0 0 24 24"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
+            ВКонтакте<span>группа компании</span>
+          </a>
+        </div>
+      </details>
+      <a class="btn btn-out" href="imperiya.vcf" download="Imperiya-Kupeley.vcf" style="padding:12.5px 18px;font-size:12.5px">
+        <svg viewBox="0 0 24 24"><path d="M12 3v11M7 9.5l5 5 5-5M4 21h16"/></svg>
+        Сохранить визитку компании в телефон
       </a>
     </div>
   </section>
