@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Империя Купелей — визитка (новый вариант · черновик)</title>
+<meta name="description" content="Электронная визитка компании «Империя Купелей»: купели, бассейны, погреба и укрытия. Напишите нам или позвоните — ежедневно 9:00–20:00.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../../sign-white.svg" type="image/svg+xml">
+<meta name="theme-color" content="#141518">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141518; --bg-2:#1b1c20; --bg-3:#0e0f12;
+  --gold:#d9a441; --gold-l:#e8c56a; --gold-d:#c9962e;
+  --text:#f2f2f2; --muted:#9b9ea4;
+  --line-g:rgba(217,164,65,.38); --line-g2:rgba(217,164,65,.2);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-gutter:stable}
+body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.grad{background:linear-gradient(92deg,var(--gold-l) 10%,var(--gold) 55%,var(--gold-d) 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
+a{color:inherit}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--gold-l);outline-offset:3px;border-radius:6px}
+
+.draftbar{position:sticky;top:0;z-index:100;background:#3d3423;color:#fff;text-align:center;font-size:12px;padding:6px 12px;font-weight:600}
+
+/* ── шапка ── */
+header{border-bottom:1px solid var(--line-g2);background:rgba(20,21,24,.92)}
+.hbar{display:flex;align-items:center;gap:14px;padding:13px 28px}
+.hbar .logo{display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none}
+.hbar .logo img{width:38px;height:45px;flex:none}
+.hbar .vt{border-left:1px solid var(--line-g);padding-left:12px}
+.hbar .nm{font-size:15px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;line-height:1.3}
+.hbar .ds{font-size:12px;color:var(--muted);line-height:1.35;margin-top:2px}
+.phone{margin-left:auto;flex:none;display:flex;align-items:center;gap:9px;text-decoration:none;
+  border:1px solid var(--line-g);border-radius:12px;padding:10px 16px;font-weight:800;font-size:14.5px;white-space:nowrap;
+  transition:border-color .15s,background-color .15s}
+.phone:hover{border-color:var(--gold-l);background:var(--bg-2)}
+.phone svg{width:17px;height:17px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
+.phone small{display:block;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.01em}
+
+/* ── первый блок: текст слева, купель справа ── */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:center;padding:34px 0 40px}
+.hero .eyebrow{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l)}
+.hero h1{font-size:clamp(34px,3.6vw,50px);font-weight:800;text-transform:uppercase;letter-spacing:.015em;line-height:1.12;margin:14px 0 16px}
+.hero .sub{font-size:16.5px;color:#d6d7da;max-width:520px}
+.hero .ln{width:48px;height:2px;background:linear-gradient(90deg,var(--gold-l),var(--gold-d));margin-top:18px;border-radius:2px}
+.hero-r{flex:none;min-width:0}
+.hero-r img{display:block;height:min(64vh,600px);max-height:min(64vh,600px);width:auto;max-width:100%;border-radius:18px;border:1px solid var(--line-g2)}
+
+/* ── кнопки ── */
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;min-height:56px;
+  padding:14px 22px;text-decoration:none;font-weight:800;font-size:15.5px;letter-spacing:.02em;transition:transform .12s}
+.btn:active{transform:scale(.985)}
+.btn svg{width:19px;height:19px;flex:none}
+.btn .col{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left}
+.btn .s{display:block;font-size:11px;font-weight:600;opacity:.75;letter-spacing:.01em}
+.btn-gold{background:linear-gradient(135deg,var(--gold-l),var(--gold-d));color:#171204}
+.btn-gold svg{stroke:#171204;fill:none;stroke-width:2}
+.btn-out{border:1px solid var(--line-g);color:var(--text)}
+.btn-out svg{stroke:var(--gold-l);fill:none;stroke-width:1.7}
+.btn-out:hover{border-color:var(--gold-l);background:var(--bg-2)}
+
+/* ── «Написать нам»: раскрывающийся выбор мессенджера ── */
+.write{position:relative}
+.write>summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.write>summary::-webkit-details-marker{display:none}
+.write .chv{margin-left:4px;color:#171204;font-size:13px;font-weight:800;line-height:1;transition:transform .18s;display:inline-block}
+.write[open]>summary .chv{transform:rotate(180deg)}
+.write .menu{position:absolute;top:calc(100% + 10px);left:0;z-index:60;min-width:300px;
+  display:grid;gap:8px;padding:12px;border:1px solid var(--line-g);border-radius:14px;background:var(--bg-2);box-shadow:0 14px 34px rgba(0,0,0,.42)}
+.write .menu a{display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px solid var(--line-g2);border-radius:11px;
+  text-decoration:none;color:var(--text);font-weight:800;font-size:14px;min-height:48px}
+.write .menu a:hover{border-color:var(--gold-l)}
+.write .menu a svg{width:21px;height:21px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
+.write .menu a span{font-size:11px;color:var(--muted);font-weight:600;display:block}
+@media (hover:none){
+  .write .menu{position:static;margin-top:10px;box-shadow:none}
+}
+
+/* ── секции ── */
+section{padding:34px 0 0}
+.sec-cap{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+
+/* ── преимущества: компактная строка ── */
+.adv{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-g2);border-bottom:1px solid var(--line-g2)}
+.adv>div{padding:18px 10px;text-align:center}
+.adv>div+div{border-left:1px solid var(--line-g2)}
+.adv b{display:block;font-size:19px;font-weight:800;line-height:1.2}
+.adv span{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35}
+.adv .grad{font-size:22px}
+
+/* ── карточки категорий ── */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cat{display:block;text-decoration:none;color:var(--text);background:var(--bg-2);border:1px solid var(--line-g2);border-radius:16px;overflow:hidden;
+  transition:border-color .18s,transform .18s}
+.cat:hover{border-color:var(--gold-l);transform:translateY(-2px)}
+.cat .ph{display:block}
+.cat .ph img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.cat .ph.kupel img{object-position:50% 32%}
+.cat .lb{display:flex;align-items:center;gap:6px;padding:14px 16px}
+.cat .lb b{font-size:17px;font-weight:800;letter-spacing:.01em}
+.cat .lb span{font-size:12px;color:var(--muted);font-weight:600}
+.cat .lb .ch{margin-left:auto;color:var(--gold-l);font-size:17px;font-weight:800;line-height:1}
+
+/* ── второстепенные действия ── */
+.secondary{display:flex;gap:14px;flex-wrap:wrap}
+.secondary details{position:relative}
+.secondary>details>summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.secondary>details>summary::-webkit-details-marker{display:none}
+.mini{display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--line-g2);color:var(--text);background:transparent;
+  border-radius:12px;min-height:48px;padding:11px 18px;text-decoration:none;font-weight:700;font-size:13.5px;transition:border-color .15s,background-color .15s}
+.secondary summary.mini:hover,a.mini:hover{border-color:var(--gold-l);background:var(--bg-2)}
+.mini svg{width:17px;height:17px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
+.secondary .chv{color:var(--gold-l);font-size:12px;font-weight:800;transition:transform .18s;display:inline-block}
+.secondary details[open] .chv{transform:rotate(180deg)}
+.submenu{position:absolute;top:calc(100% + 8px);left:0;z-index:60;min-width:260px;display:grid;gap:8px;padding:10px;
+  border:1px solid var(--line-g);border-radius:12px;background:var(--bg-2);box-shadow:0 14px 34px rgba(0,0,0,.42)}
+.submenu a{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line-g2);border-radius:10px;
+  text-decoration:none;color:var(--text);font-weight:700;font-size:13px;min-height:44px}
+.submenu a:hover{border-color:var(--gold-l)}
+.submenu a svg{width:19px;height:19px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
+@media (hover:none){
+  .submenu{position:static;margin-top:8px;box-shadow:none}
+}
+
+/* ── футер ── */
+footer{margin-top:44px;border-top:1px solid var(--line-g2);background:var(--bg-3)}
+.fcols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:26px 0 8px}
+.fcols svg{width:19px;height:19px;stroke:var(--gold-l);fill:none;stroke-width:1.5;margin:0 auto 8px;display:block}
+.fcols b{display:block;font-size:12.5px;font-weight:700;line-height:1.5}
+.fcols span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.fcols a{text-decoration:none}
+.fcols a:hover{color:var(--gold-l)}
+.fsite{text-align:center;font-size:12.5px;color:var(--muted);margin-top:14px}
+.fsite a{color:var(--gold-l);text-decoration:none;font-weight:600}
+.fphone{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:12px;font-size:13.5px;font-weight:700}
+.fphone a{text-decoration:none}
+.fphone a:hover{color:var(--gold-l)}
+.fphone span{color:var(--muted);font-weight:600;font-size:11.5px;display:block;text-align:center}
+.fcopy{text-align:center;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding:18px 0 22px}
+
+/* ── мобильная версия ── */
+@media (max-width:919px){
+  .wrap{padding:0 18px}
+  .hbar{padding:11px 18px}
+  .hbar .ds{display:none}
+  .phone{padding:9px 13px;font-size:13px}
+  .phone .col{display:none}
+  .hero{grid-template-columns:1fr;gap:26px;padding:24px 0 8px}
+  .hero h1{font-size:clamp(30px,8.4vw,40px);margin:12px 0 12px}
+  .hero .sub{font-size:15px}
+  .hero-r{order:2}
+  .hero-r img{width:100%;height:auto;max-height:none;aspect-ratio:1600/2058}
+  .cta{margin-top:22px}
+  .cta .btn{flex:1 1 100%}
+  .cats{grid-template-columns:1fr;gap:12px}
+  section{padding:28px 0 0}
+  .secondary{gap:10px}
+  .secondary .mini,a.mini{flex:1 1 100%}
+  .fcols{grid-template-columns:1fr;gap:18px;text-align:center}
+  .fphone{flex-direction:column;gap:10px;align-items:center}
+}
+@media (max-width:359px){
+  .adv{grid-template-columns:1fr}
+  .adv>div+div{border-left:none;border-top:1px solid var(--line-g2)}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="draftbar">✏️ Новый вариант · черновик — страница на проверке, финальный адрес будет после одобрения</div>
+
+<header>
+  <div class="hbar wrap">
+    <a class="logo" href="#top" aria-label="Империя Купелей — наверх">
+      <img src="../../sign-white.svg" alt="Логотип Империи Купелей">
+      <span class="vt">
+        <span class="nm grad">Империя Купелей</span>
+        <span class="ds">Производство купелей, бассейнов и погребов</span>
+      </span>
+    </a>
+    <a class="phone" href="tel:+78612132215">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+      <span class="col"><span>+7 861 213-22-15</span><small>ежедневно 9:00–20:00</small></span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <section class="hero">
+    <div class="hero-l">
+      <div class="eyebrow">Империя Купелей · собственное производство</div>
+      <h1>Дарим счастье<br><span class="grad">через изделия</span></h1>
+      <p class="sub">Купели, бассейны, погреба и укрытия из полипропилена, изделия из нержавеющей стали — всё производим сами.</p>
+      <div class="ln"></div>
+      <div class="cta">
+        <details class="write">
+          <summary class="btn btn-gold">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span class="col"><span>Написать нам</span><span class="s">выберите мессенджер — ответим быстро</span></span>
+            <span class="chv" aria-hidden="true">▾</span>
+          </summary>
+          <div class="menu">
+            <a href="https://wa.me/79933205565">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
+              <span class="col">WhatsApp<span>чат с компанией · +7 993 320-55-65</span></span>
+            </a>
+            <a href="https://vk.me/imperiya_kupeley">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
+              <span class="col">ВКонтакте<span>сообщения сообщества</span></span>
+            </a>
+          </div>
+        </details>
+        <a class="btn btn-out" href="tel:+78612132215">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+          <span class="col"><span>Позвонить</span><span class="s">ежедневно 9:00–20:00, быстрая связь</span></span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-r">
+      <img src="photos/hero.webp" alt="Купель с подсветкой на террасе вечером — видны весь борт и чаша">
+    </div>
+  </section>
+
+  <section class="adv" aria-label="Опыт и преимущества">
+    <div><b class="grad">3000+</b><span>изделий за 8 лет</span></div>
+    <div><b>Собственное</b><span>производство</span></div>
+    <div><b>Доставка</b><span>по России</span></div>
+  </section>
+
+  <section>
+    <div class="sec-cap">Что мы производим</div>
+    <div class="cats">
+      <a class="cat" href="https://imperia-kupeley.ru/">
+        <span class="ph kupel"><img src="photos/kupeli.webp" alt="Белая купель с подсветкой на деревянной террасе" loading="lazy" decoding="async"></span>
+        <span class="lb"><b>Купели</b><span>для дома и улицы</span><span class="ch" aria-hidden="true">›</span></span>
+      </a>
+      <a class="cat" href="https://imperia-kupeley.ru/">
+        <span class="ph"><img src="photos/basseyn.webp" alt="Полипропиленовый бассейн на участке" loading="lazy" decoding="async"></span>
+        <span class="lb"><b>Бассейны</b><span>из полипропилена</span><span class="ch" aria-hidden="true">›</span></span>
+      </a>
+      <a class="cat" href="https://pogreb.imperia-kupeley.ru/">
+        <span class="ph"><img src="photos/pogreb-interer-full.webp" alt="Погреб изнутри: полки с заготовками, ящики и лестница" loading="lazy" decoding="async"></span>
+        <span class="lb"><b>Погреба</b><span>каталог погребов</span><span class="ch" aria-hidden="true">›</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="secondary">
+      <details>
+        <summary class="mini">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.2 13.8a7 7 0 0 0 3 2l1.4-1.4 4 1.6.8 2.6a1.6 1.6 0 0 1-1.7 2A16.5 16.5 0 0 1 4.4 6.3 1.6 1.6 0 0 1 6.4 4.6l2.6.8 1.6 4z" transform="translate(1.5 1.5) scale(.9)"/><path d="M4 11.5A8.5 8.5 0 0 0 12.5 20"/><path d="M4 7a12.5 12.5 0 0 1 13 13"/></svg>
+          Подписаться на нас
+          <span class="chv" aria-hidden="true">▾</span>
+        </summary>
+        <div class="submenu">
+          <a href="https://t.me/imperiya_kupeley">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4L3 11l6 2.5L11.5 20 14 15.5 20 17z"/></svg>
+            Telegram — канал компании
+          </a>
+          <a href="https://vk.com/imperiya_kupeley">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
+            ВКонтакте — группа компании
+          </a>
+        </div>
+      </details>
+      <a class="mini" href="imperiya.vcf" download="Imperiya-Kupeley.vcf">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11M7 9.5l5 5 5-5M4 21h16"/></svg>
+        Сохранить визитку в телефон (.vcf)
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <b>Краснодарский край,<br>посёлок Южный,<br>ул. Новая, 33/21</b>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        <b>Ежедневно<br>9:00–20:00</b>
+        <span>время московское</span>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+        <a href="https://imperia-kupeley.ru/"><b>imperia-kupeley.ru</b></a>
+        <span>купели и бассейны</span>
+        <a href="https://pogreb.imperia-kupeley.ru/"><b>pogreb.imperia-kupeley.ru</b></a>
+        <span>каталог погребов</span>
+      </div>
+    </div>
+    <div class="fphone">
+      <a href="tel:+78612132215"><span>Телефон</span>+7 861 213-22-15</a>
+      <a href="https://wa.me/79933205565"><span>WhatsApp</span>+7 993 320-55-65</a>
+    </div>
+    <div class="fsite">Визитка-черновик — новый вариант на проверке</div>
+  </div>
+  <div class="fcopy">© Империя Купелей</div>
+</footer>
+
+</body>
+</html>
