@@ -77,11 +77,25 @@ header{border-bottom:1px solid var(--line-g2);background:rgba(20,21,24,.92)}
 .write[open]>summary .chv{transform:rotate(180deg)}
 .write .menu{position:absolute;top:calc(100% + 10px);left:0;z-index:60;min-width:300px;
   display:grid;gap:8px;padding:12px;border:1px solid var(--line-g);border-radius:14px;background:var(--bg-2);box-shadow:0 14px 34px rgba(0,0,0,.42)}
-.write .menu a{display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px solid var(--line-g2);border-radius:11px;
+.write .menu a,.write .menu button{display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px solid var(--line-g2);border-radius:11px;
   text-decoration:none;color:var(--text);font-weight:800;font-size:14px;min-height:48px}
-.write .menu a:hover{border-color:var(--gold-l)}
-.write .menu a svg{width:21px;height:21px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
-.write .menu a span{font-size:11px;color:var(--muted);font-weight:600;display:block}
+.write .menu button{background:transparent;cursor:pointer;font-family:inherit;width:100%;text-align:left}
+.write .menu a:hover,.write .menu button:hover{border-color:var(--gold-l)}
+.write .menu a svg,.write .menu button svg{width:21px;height:21px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
+.write .menu .col{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;line-height:1.3}
+.write .menu .col span+span{font-size:11px;color:var(--muted);font-weight:600}
+/* Telegram/MAX: прямых ссылок личного чата нет — честная панель «номер + копирование» */
+.write .numbox{margin-top:4px;padding:12px 2px 2px;border-top:1px solid var(--line-g2);display:grid;gap:9px;justify-items:start}
+.write .numbox[hidden]{display:none}
+.write .nb-app{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-l)}
+.write .nb-num{font-size:19px;font-weight:800;letter-spacing:.02em;cursor:text;-webkit-user-select:all;user-select:all}
+.write .nb-copy{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-g);border-radius:10px;background:transparent;
+  color:var(--text);font:inherit;font-weight:700;font-size:13px;min-height:42px;padding:9px 16px;cursor:pointer;
+  transition:border-color .15s,background-color .15s}
+.write .nb-copy:hover{border-color:var(--gold-l);background:var(--bg-3)}
+.write .nb-copy svg{width:15px;height:15px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
+.write .nb-copy.ok{border-color:var(--gold-l);color:var(--gold-l)}
+.write .nb-hint{font-size:11.5px;color:var(--muted);line-height:1.45;font-weight:500}
 @media (hover:none){
   .write .menu{position:static;margin-top:10px;box-shadow:none}
 }
@@ -111,26 +125,15 @@ section{padding:34px 0 0}
 .cat .lb span{font-size:12px;color:var(--muted);font-weight:600}
 .cat .lb .ch{margin-left:auto;color:var(--gold-l);font-size:17px;font-weight:800;line-height:1}
 
-/* ── второстепенные действия ── */
-.secondary{display:flex;gap:14px;flex-wrap:wrap}
-.secondary details{position:relative}
-.secondary>details>summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.secondary>details>summary::-webkit-details-marker{display:none}
-.mini{display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--line-g2);color:var(--text);background:transparent;
-  border-radius:12px;min-height:48px;padding:11px 18px;text-decoration:none;font-weight:700;font-size:13.5px;transition:border-color .15s,background-color .15s}
-.secondary summary.mini:hover,a.mini:hover{border-color:var(--gold-l);background:var(--bg-2)}
-.mini svg{width:17px;height:17px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
-.secondary .chv{color:var(--gold-l);font-size:12px;font-weight:800;transition:transform .18s;display:inline-block}
-.secondary details[open] .chv{transform:rotate(180deg)}
-.submenu{position:absolute;top:calc(100% + 8px);left:0;z-index:60;min-width:260px;display:grid;gap:8px;padding:10px;
-  border:1px solid var(--line-g);border-radius:12px;background:var(--bg-2);box-shadow:0 14px 34px rgba(0,0,0,.42)}
-.submenu a{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line-g2);border-radius:10px;
-  text-decoration:none;color:var(--text);font-weight:700;font-size:13px;min-height:44px}
-.submenu a:hover{border-color:var(--gold-l)}
-.submenu a svg{width:19px;height:19px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
-@media (hover:none){
-  .submenu{position:static;margin-top:8px;box-shadow:none}
-}
+/* ── мы в соцсетях: компактный ряд ── */
+.socials{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.soc{display:flex;align-items:center;gap:13px;padding:13px 16px;border:1px solid var(--line-g2);border-radius:14px;background:var(--bg-2);
+  text-decoration:none;color:var(--text);transition:border-color .16s,transform .16s}
+.soc:hover{border-color:var(--gold-l);transform:translateY(-2px)}
+.soc svg{width:22px;height:22px;stroke:var(--gold-l);fill:none;stroke-width:1.7;flex:none}
+.soc .sc{min-width:0}
+.soc .sc b{display:block;font-size:14.5px;font-weight:800;line-height:1.25}
+.soc .sc small{display:block;font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.35;margin-top:2px}
 
 /* ── футер ── */
 footer{margin-top:44px;border-top:1px solid var(--line-g2);background:var(--bg-3)}
@@ -164,8 +167,7 @@ footer{margin-top:44px;border-top:1px solid var(--line-g2);background:var(--bg-3
   .cta .btn{flex:1 1 100%}
   .cats{grid-template-columns:1fr;gap:12px}
   section{padding:28px 0 0}
-  .secondary{gap:10px}
-  .secondary .mini,a.mini{flex:1 1 100%}
+  .socials{grid-template-columns:1fr;gap:10px}
   .fcols{grid-template-columns:1fr;gap:18px;text-align:center}
   .fphone{flex-direction:column;gap:10px;align-items:center}
 }
@@ -221,6 +223,23 @@ footer{margin-top:44px;border-top:1px solid var(--line-g2);background:var(--bg-3
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
               <span class="col">ВКонтакте<span>сообщения сообщества</span></span>
             </a>
+            <button type="button" data-app="Telegram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3L10.5 13.2M21 3l-6.8 17.4-3.7-7.2-7.5-3.4z"/></svg>
+              <span class="col"><span>Telegram</span><span>по номеру +7 993 320-55-65</span></span>
+            </button>
+            <button type="button" data-app="MAX">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 18.5v-12l5.2 7.6 5.2-7.6v12"/><path d="M19.5 6.5v12"/></svg>
+              <span class="col"><span>MAX</span><span>по номеру +7 993 320-55-65</span></span>
+            </button>
+            <div class="numbox" id="numbox" hidden>
+              <div class="nb-app" id="nbApp">Telegram</div>
+              <b class="nb-num" title="Нажмите — номер выделится целиком">+7 993 320-55-65</b>
+              <button type="button" class="nb-copy" id="nbCopy">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5 14.5V6.5a2 2 0 0 1 2-2h8"/></svg>
+                <span id="nbCopyT">Скопировать номер</span>
+              </button>
+              <p class="nb-hint">Откройте приложение <span id="nbApp2">Telegram</span>, найдите контакт по номеру и напишите нам — ответим быстро. Номер можно выделить вручную.</p>
+            </div>
           </div>
         </details>
         <a class="btn btn-out" href="tel:+78612132215">
@@ -262,25 +281,21 @@ footer{margin-top:44px;border-top:1px solid var(--line-g2);background:var(--bg-3
     </div>
   </section>
 
-  <section>
-    <div class="secondary">
-      <details>
-        <summary class="mini">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.2 13.8a7 7 0 0 0 3 2l1.4-1.4 4 1.6.8 2.6a1.6 1.6 0 0 1-1.7 2A16.5 16.5 0 0 1 4.4 6.3 1.6 1.6 0 0 1 6.4 4.6l2.6.8 1.6 4z" transform="translate(1.5 1.5) scale(.9)"/><path d="M4 11.5A8.5 8.5 0 0 0 12.5 20"/><path d="M4 7a12.5 12.5 0 0 1 13 13"/></svg>
-          Подписаться на нас
-          <span class="chv" aria-hidden="true">▾</span>
-        </summary>
-        <div class="submenu">
-          <a href="https://t.me/imperiya_kupeley">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4L3 11l6 2.5L11.5 20 14 15.5 20 17z"/></svg>
-            Telegram — канал компании
-          </a>
-          <a href="https://vk.com/imperiya_kupeley">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
-            ВКонтакте — группа компании
-          </a>
-        </div>
-      </details>
+  <section aria-label="Мы в соцсетях">
+    <div class="sec-cap">Мы в соцсетях</div>
+    <div class="socials">
+      <a class="soc" href="https://www.youtube.com/@Imperiya_kupeley" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="6" width="18.8" height="12.4" rx="3.4"/><path d="M10.3 9.6v5.2l4.8-2.6z"/></svg>
+        <span class="sc"><b>YouTube</b><small>видео о производстве</small></span>
+      </a>
+      <a class="soc" href="https://vk.com/imperiya_kupeley" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c.5 3.5 2 6 3.5 6.5V7h3v4c1.5-.5 2.7-2.2 3.2-4H20c-.6 3-2 5.2-3.8 6.2C18 14.5 19.6 16.5 20.5 19h-3.2c-.7-2-2-3.6-3.8-4.2V19h-2.5C7.5 19 5 13.5 4 7z"/></svg>
+        <span class="sc"><b>ВКонтакте</b><small>группа компании</small></span>
+      </a>
+      <a class="soc" href="https://t.me/imperiya_kupeley" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3L10.5 13.2M21 3l-6.8 17.4-3.7-7.2-7.5-3.4z"/></svg>
+        <span class="sc"><b>Telegram</b><small>канал компании</small></span>
+      </a>
     </div>
   </section>
 
@@ -314,6 +329,38 @@ footer{margin-top:44px;border-top:1px solid var(--line-g2);background:var(--bg-3
   </div>
   <div class="fcopy">© Империя Купелей</div>
 </footer>
+
+<script>
+(function(){
+  var NUM='+79933205565';
+  var box=document.getElementById('numbox'),copyBtn=document.getElementById('nbCopy'),copyT=document.getElementById('nbCopyT');
+  var appEls=[document.getElementById('nbApp'),document.getElementById('nbApp2')],current='';
+  function resetCopy(){copyT.textContent='Скопировать номер';copyBtn.classList.remove('ok')}
+  document.querySelectorAll('.write .menu button[data-app]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var app=b.getAttribute('data-app');
+      if(app===current&&!box.hidden){box.hidden=true;current='';return}
+      current=app;appEls.forEach(function(e){e.textContent=app});resetCopy();box.hidden=false;
+    });
+  });
+  copyBtn.addEventListener('click',function(){
+    function done(ok){copyT.textContent=ok?'Скопировано ✓':'Скопируйте вручную';copyBtn.classList.toggle('ok',ok);
+      if(ok)setTimeout(resetCopy,2600)}
+    function fallback(){try{var t=document.createElement('textarea');t.value=NUM;t.setAttribute('readonly','');
+      t.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(t);t.focus();t.select();
+      var ok=document.execCommand('copy');t.remove();done(ok)}catch(e){done(false)}}
+    if(navigator.clipboard&&navigator.clipboard.writeText&&window.isSecureContext){
+      navigator.clipboard.writeText(NUM).then(function(){done(true)},fallback)}else fallback();
+  });
+  var write=document.querySelector('details.write');
+  write.addEventListener('toggle',function(){if(!write.open){box.hidden=true;current=''}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){
+    document.querySelectorAll('details[open]').forEach(function(d){d.open=false})}});
+  document.addEventListener('pointerdown',function(e){document.querySelectorAll('details[open]').forEach(function(d){
+    if(!d.contains(e.target))d.open=false})});
+})();
+</script>
+<noscript><style>.write .menu button[data-app]{display:none}</style></noscript>
 
 </body>
 </html>
