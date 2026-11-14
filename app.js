@@ -48,8 +48,8 @@ var B24="https://b24-z45kgu.bitrix24.ru/rest/1/s3wpr4vj16oscmv7/crm.lead.add.jso
 var SVETA="11898"; /* Светлана Иванова — ответственная за лиды с сайта */
 var IS_MOBILE=/Android|iPhone|iPad|Mobi/i.test(navigator.userAgent);
 function b24common(){
-  var f={"fields[SOURCE_ID]":"WEB","fields[ASSIGNED_BY_ID]":SVETA,
-         "fields[SOURCE_DESCRIPTION]":"Сайт погреба · pogreb.imperia-kupeley.ru"};
+  var f={"fields[SOURCE_ID]":"UC_POgreb","fields[ASSIGNED_BY_ID]":SVETA,
+         "fields[SOURCE_DESCRIPTION]":"Сайт погребов · pogreb.imperia-kupeley.ru"};
   try{
     new URLSearchParams(location.search).forEach(function(v,k){
       if(/^utm_/i.test(k)) f["fields["+k.toUpperCase()+"]"]=v;
@@ -76,7 +76,7 @@ document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(el,i){
     }catch(e){}
     var where=el.closest("#header-messenger-panel")?"панель «Написать» в шапке":(el.closest("#messengers")?"блок контактов":"ссылка");
     var f=b24common();
-    f["fields[TITLE]"]="Сайт погреба — клик WhatsApp («"+where+"»)";
+    f["fields[TITLE]"]="Сайт погребов — клик WhatsApp («"+where+"»)";
     f["fields[COMMENTS]"]="Клик по кнопке WhatsApp («"+where+"») — клиент ушёл писать в мессенджер.\nСтраница: "+location.pathname+location.search+"\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп");
     b24send(f);
   });
@@ -101,7 +101,7 @@ document.querySelector('#request-form').addEventListener('submit',e=>{
   const answer=contact==='Позвонить'?'позвонить':('написать в '+messenger);
   const page=location.pathname==='/'?'главная':'страница «Для продуктов»';
   var f=b24common();
-  f["fields[TITLE]"]="Сайт погреба — заявка с формы ("+page+")";
+  f["fields[TITLE]"]="Сайт погребов — заявка с формы ("+page+")";
   f["fields[PHONE][0][VALUE]"]=String(data.get('phone')||'');
   f["fields[PHONE][0][VALUE_TYPE]"]="WORK";
   var c="Интересует: "+model+
@@ -113,7 +113,7 @@ document.querySelector('#request-form').addEventListener('submit',e=>{
     "\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп")+
     (NIGHT?"\n⏰ Оставлено в нерабочее время — связаться утром, с 9:00":"");
   f["fields[COMMENTS]"]=c;
-  if(NIGHT) f["fields[TITLE]"]="Сайт погреба — заявка с формы ("+page+", ночь, связаться с 9:00)";
+  if(NIGHT) f["fields[TITLE]"]="Сайт погребов — заявка с формы ("+page+", ночь, связаться с 9:00)";
   b24send(f);
   const result=document.querySelector('#form-result');
   form.reset();
