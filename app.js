@@ -116,12 +116,12 @@ document.querySelector('#request-form').addEventListener('submit',e=>{
   if(NIGHT) f["fields[TITLE]"]="Сайт погреба — заявка с формы ("+page+", ночь, связаться с 9:00)";
   b24send(f);
   const result=document.querySelector('#form-result');
+  form.reset();
+  updateContactMethod(); /* восстановит channel-choice и спрячет result — показываем ПОСЛЕ */
   result.textContent=NIGHT
     ?"Сейчас нерабочее время. Заявка у нас — с 9:00 утра сами выйдем с вами на связь ("+answer+")."
     :"Заявка принята! Перезвоним или напишем в течение часа (9:00–20:00 МСК), ответим "+answer+".";
   result.hidden=false;
-  form.reset();
-  updateContactMethod();
   result.scrollIntoView({behavior:'smooth',block:'nearest'});
 });
 document.querySelector('input[name="phone"]').addEventListener('input',e=>e.target.setCustomValidity(''));
