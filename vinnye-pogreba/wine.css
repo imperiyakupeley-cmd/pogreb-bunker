@@ -1,0 +1,21 @@
+/* Страница «Винный погребок» — дополнения к общему /style.css (перенос из
+   предпросмотра f1cc743). Общий файл действующих страниц не меняем: здесь только
+   правила, которых в нём нет. */
+.wine-question {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 16px;
+  min-height: 44px;
+  padding: 10px 14px;
+  background: white;
+  border: 1px solid #e9ded0;
+  border-radius: 8px;
+  color: var(--brand-dark);
+  font-weight: 600;
+}
+.wine-question:hover { background: var(--tint); }
+
+/* Режим «Задать вопрос»: мессенджеры и выбор «Как удобнее ответить» не нужны —
+   вопрос всегда уходит в выбранный мессенджер. */
+.request-section.is-question #contacts .messenger-block,
+.request-section.is-question #request-form fieldset:first-of-type { display: none; }
