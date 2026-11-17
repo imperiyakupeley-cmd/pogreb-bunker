@@ -166,6 +166,7 @@ function sendLead(phoneDisplay, where) {
     if (sessionStorage.getItem('ai-lead-' + d)) return;
     sessionStorage.setItem('ai-lead-' + d, '1');
   } catch (e) { /* приватный режим — дедуп пропускаем, лид шлём */ }
+  try{if(window.ym)ym(114312156,"reachGoal","ai_phone");}catch(e){}
   const platform = window.matchMedia('(max-width:600px)').matches ? 'мобильный' : 'десктоп';
   const payload = {
     mode: 'add',
@@ -263,6 +264,7 @@ async function ensureChat() {
 }
 
 function openPanel() {
+  try{if(window.ym)ym(114312156,"reachGoal","ai_chat_open");}catch(e){}
   panel.classList.add('open');
   fab.hidden = true;
   const mob = window.matchMedia('(max-width:600px)').matches;

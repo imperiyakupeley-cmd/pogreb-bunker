@@ -86,6 +86,7 @@ document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(el,i){
       sessionStorage.setItem(key,"1");
     }catch(e){}
     var where=el.closest("#header-messenger-panel")?"панель «Написать» в шапке":(el.closest("#messengers")?"блок контактов":"ссылка");
+    try{if(window.ym)ym(114312156,"reachGoal","wa_click");}catch(e){}
     leadSend(leadParams({kind:"click",where:where}));
   });
 });
@@ -125,6 +126,7 @@ document.querySelector('#request-form').addEventListener('submit',async e=>{
     result.scrollIntoView({behavior:'smooth',block:'nearest'});
     return;
   }
+  try{if(window.ym)ym(114312156,"reachGoal","zayavka_form");}catch(e){}
   form.reset();
   updateContactMethod(); /* восстановит channel-choice и спрячет result — показываем ПОСЛЕ */
   result.textContent=NIGHT
