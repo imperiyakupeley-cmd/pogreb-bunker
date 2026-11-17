@@ -190,15 +190,27 @@ function sendLead(phoneDisplay, where) {
     else legacyLead(payload);
   }).catch(() => legacyLead(payload));
 }
-/* фолбэк: прямой маяк вебхуком со страницы (как до lead.php) */
+/* фолбэк: через серверный обработчик form-lead.php (вебхук Б24 на странице больше не хранится) */
 function legacyLead(payload) {
-  if (!window.b24send || !window.b24common) return;
-  const f = window.b24common();
-  f['fields[TITLE]'] = 'Сайт погреба — телефон из чата с ИИ';
-  f['fields[PHONE][0][VALUE]'] = payload.phone;
-  f['fields[PHONE][0][VALUE_TYPE]'] = 'WORK';
-  f['fields[COMMENTS]'] = payload.comments;
-  window.b24send(f);
+  const p = new URLSearchParams({
+    kind: 'chat_fallback',
+    phone: payload.phone || '',
+    comments: payload.comments || '',
+    page: location.pathname,
+    qs: location.search,
+    platform: /Android|iPhone|iPad|Mobi/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+  });
+  try {
+    new URLSearchParams(location.search).forEach((v, k) => {
+      if (/^utm_/i.test(k)) p.set(k.toLowerCase(), v);
+    });
+  } catch (e) {}
+  fetch('https://ai.imperia-kupeley.ru/form-lead.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: p.toString(),
+    keepalive: true
+  }).catch(() => {});
 }
 /* допись продолжения диалога в лид CRM */
 function flushUpdate() {

@@ -92,34 +92,44 @@ document.querySelectorAll('input[name="contact"]').forEach(input=>input.addEvent
 updateContactMethod();
 channelChoice.querySelectorAll('input').forEach(input=>input.addEventListener('change',()=>{document.querySelector('#form-result').hidden=true;}));
 
-/* ── Лиды в Битрикс24: тот же обработчик, что у главной и «Для продуктов» ──
-   B24 = URL узкого вебхука …/crm.lead.add.json (только создание лида).
-   Отличие страницы: отправляем fetch-ом и показываем успех только по
-   подтверждению обработчика; при ошибке введённые данные сохраняются. */
-var B24="https://b24-z45kgu.bitrix24.ru/rest/1/s3wpr4vj16oscmv7/crm.lead.add.json";
-var SVETA="11898"; /* Светлана — ответственная за лиды с сайта */
+/* ── Лиды в Битрикс24 — через серверный обработчик на нашем хостинге.
+   Вебхук Б24 хранится на сервере вне web-корня; в публичном коде ключа нет.
+   Обработчик валидирует поля и отвечает {"ok":true,"id":N} — экран успеха
+   показываем только после подтверждения с ID созданного лида. ── */
+var LEAD_API='https://ai.imperia-kupeley.ru/form-lead.php';
 var IS_MOBILE=/Android|iPhone|iPad|Mobi/i.test(navigator.userAgent);
-function isNight(h){ if(h===undefined) h=new Date().getHours(); return h>=20||h<9; }
-var NIGHT=isNight();
-function b24common(){
-  var f={"fields[SOURCE_ID]":"UC_POgreb","fields[ASSIGNED_BY_ID]":SVETA,
-         "fields[SOURCE_DESCRIPTION]":"Сайт погребов · pogreb.imperia-kupeley.ru"};
+function leadParams(extra){
+  var p=extra||{};
+  p.page=location.pathname;
+  p.qs=location.search;
+  p.platform=IS_MOBILE?'mobile':'desktop';
   try{
     new URLSearchParams(location.search).forEach(function(v,k){
-      if(/^utm_/i.test(k)) f["fields["+k.toUpperCase()+"]"]=v;
+      if(/^utm_/i.test(k)) p[k.toLowerCase()]=v;
     });
   }catch(e){}
-  return f;
+  return p;
 }
-function b24send(fields){
-  if(!B24||!navigator.sendBeacon) return false;
+function leadSend(p){ /* без чтения ответа: факты-клики */
   try{
-    var s=Object.keys(fields).map(function(k){
-      return encodeURIComponent(k)+"="+encodeURIComponent(fields[k]);
-    }).join("&");
-    return navigator.sendBeacon(B24,new Blob([s],{type:"application/x-www-form-urlencoded"}));
-  }catch(e){ return false; }
+    var s=new URLSearchParams(p).toString();
+    navigator.sendBeacon(LEAD_API,new Blob([s],{type:"application/x-www-form-urlencoded"}));
+  }catch(e){}
 }
+async function leadFetch(p){ /* с подтверждением: числовой ID созданного лида */
+  const body=new URLSearchParams(p).toString();
+  const ctrl=new AbortController();
+  const timer=setTimeout(()=>ctrl.abort(),15000);
+  try{
+    const res=await fetch(LEAD_API,{method:'POST',headers:{"Content-Type":"application/x-www-form-urlencoded"},body,keepalive:true,signal:ctrl.signal});
+    clearTimeout(timer);
+    if(!res.ok) return null;
+    const json=await res.json();
+    return (json&&json.ok&&typeof json.id==='number'&&json.id>0)?json.id:null;
+  }catch(e){ clearTimeout(timer); return null; }
+}
+function isNight(h){ if(h===undefined) h=new Date().getHours(); return h>=20||h<9; }
+var NIGHT=isNight();
 /* Клик по ссылке WhatsApp → лид-факт (дедуп: раз за сессию на кнопку) */
 document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(el,i){
   var key="wa-sent-v2-"+i;
@@ -129,25 +139,9 @@ document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(el,i){
       sessionStorage.setItem(key,"1");
     }catch(e){}
     var where=el.closest("#header-messenger-panel")?"панель «Написать» в шапке":(el.closest("#messengers")?"блок контактов":"ссылка");
-    var f=b24common();
-    f["fields[TITLE]"]="Сайт погребов — клик WhatsApp («"+where+"»)";
-    f["fields[COMMENTS]"]="Клик по кнопке WhatsApp («"+where+"») — клиент ушёл писать в мессенджер.\nСтраница: "+location.pathname+location.search+"\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп");
-    b24send(f);
+    leadSend(leadParams({kind:"click",where:where}));
   });
 });
-/* Отправка с подтверждением: числовой result = ID созданного лида */
-async function b24fetch(fields){
-  const body=Object.keys(fields).map(k=>encodeURIComponent(k)+"="+encodeURIComponent(fields[k])).join("&");
-  const ctrl=new AbortController();
-  const timer=setTimeout(()=>ctrl.abort(),15000);
-  try{
-    const res=await fetch(B24,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body,keepalive:true,signal:ctrl.signal});
-    clearTimeout(timer);
-    if(!res.ok) return null;
-    const json=await res.json();
-    return (json&&typeof json.result==="number")?json.result:null;
-  }catch(e){ clearTimeout(timer); return null; }
-}
 form.addEventListener('submit',async event=>{
   event.preventDefault();
   const phone=form.elements.phone;
@@ -162,34 +156,19 @@ form.addEventListener('submit',async event=>{
   const contact=String(data.get('contact')||'');
   const answer=contact==='Позвонить'?'позвонить':('написать в '+messenger);
   const city=String(data.get('city')||'').trim();
-  const marketing=data.get('marketing_consent')==='yes'?'да':'нет';
-  var f=b24common();
-  f["fields[PHONE][0][VALUE]"]=String(data.get('phone')||'');
-  f["fields[PHONE][0][VALUE_TYPE]"]="WORK";
-  if(asking){
-    f["fields[TITLE]"]="Вопрос с сайта — Винный погребок";
-    f["fields[COMMENTS]"]="Вопрос: "+noteText+
-      (city?("\nГород: "+city):"")+
-      "\nКак ответить: "+answer+
-      "\nРекламная рассылка: "+marketing+
-      "\nСтраница: "+location.pathname+location.search+
-      "\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп")+
-      (NIGHT?"\n⏰ Оставлено в нерабочее время — связаться утром, с 9:00":"");
-  }else{
-    f["fields[TITLE]"]="Расчёт — Винный погребок";
-    f["fields[COMMENTS]"]="Интересует: "+String(data.get('model')||'')+
-      (city?("\nГород установки: "+city):"")+
-      "\nКак ответить: "+answer+
-      (noteText?("\nПожелания: "+noteText):"")+
-      "\nРекламная рассылка: "+marketing+
-      "\nСтраница: "+location.pathname+location.search+
-      "\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп")+
-      (NIGHT?"\n⏰ Оставлено в нерабочее время — связаться утром, с 9:00":"");
-  }
+  const marketing=data.get('marketing_consent')==='yes'?'yes':'no';
+  const consent=data.get('personal_data_consent')==='yes'?'yes':'no';
+  var p=leadParams({
+    kind:'form',intent:asking?'wine_question':'wine_calculation',
+    phone:String(data.get('phone')||''),city:city,model:String(data.get('model')||''),
+    contact:contact,messenger:messenger,notes:noteText,
+    marketing:marketing,consent:consent,night:NIGHT?'1':'0',
+    company:String(data.get('company')||'')
+  });
   const submitButton=form.querySelector('button[type="submit"]');
   const result=document.querySelector('#form-result');
   submitButton.disabled=true;
-  const leadId=await b24fetch(f);
+  const leadId=await leadFetch(p);
   submitButton.disabled=false;
   if(leadId===null){
     result.textContent="Не получилось отправить. Проверьте связь и нажмите кнопку ещё раз — введённые данные сохранены.";
@@ -200,7 +179,7 @@ form.addEventListener('submit',async event=>{
   form.reset();
   openRequest(false); /* возвращает подписи и вид полей к режиму расчёта (заодно прячет result — покажем ниже) */
   result.textContent=NIGHT
-    ?"Сейчас нерабочее время. Заявка у нас — с 9:00 утра сами выйдем с вами на связь ("+answer+")."
+    ?"Сейчас нерабочее время. Заявка у нас — с 9:00 утра сами выйдём с вами на связь ("+answer+")."
     :(asking
       ?"Вопрос принят! Ответим в течение часа (9:00–20:00 МСК) — "+answer+"."
       :"Заявка принята! Перезвоним или напишем в течение часа (9:00–20:00 МСК), ответим "+answer+".");

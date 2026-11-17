@@ -41,30 +41,41 @@ updateContactMethod();
 channelChoice.querySelectorAll('input').forEach(input=>input.addEventListener('change',()=>{const result=document.querySelector('#form-result');if(result)result.hidden=true;}));
 const pageFormats={"/vinnye-pogreba/":"Винный погреб","/pogreb-ukrytie/":"Погреб-укрытие"};if(pageFormats[location.pathname])select.value=pageFormats[location.pathname];
 
-/* ── Лиды в Битрикс24 (мост без сервера: sendBeacon напрямую) — прод-схема сайта ──
-   B24 = URL узкого вебхука …/crm.lead.add.json. Пустая строка = интеграция
-   выключена. Полный доступ сюда НЕ пойдёт никогда — только узкий ключ crm.lead.add. */
-var B24="https://b24-z45kgu.bitrix24.ru/rest/1/s3wpr4vj16oscmv7/crm.lead.add.json";
-var SVETA="11898"; /* Светлана Иванова — ответственная за лиды с сайта */
+/* ── Лиды в Битрикс24 — через серверный обработчик на нашем хостинге.
+   Вебхук Б24 хранится на сервере вне web-корня; в публичном коде ключа нет.
+   Обработчик валидирует поля и отвечает {"ok":true,"id":N} — экран успеха
+   показываем только после подтверждения с ID созданного лида. ── */
+var LEAD_API='https://ai.imperia-kupeley.ru/form-lead.php';
 var IS_MOBILE=/Android|iPhone|iPad|Mobi/i.test(navigator.userAgent);
-function b24common(){
-  var f={"fields[SOURCE_ID]":"UC_POgreb","fields[ASSIGNED_BY_ID]":SVETA,
-         "fields[SOURCE_DESCRIPTION]":"Сайт погребов · pogreb.imperia-kupeley.ru"};
+function leadParams(extra){
+  var p=extra||{};
+  p.page=location.pathname;
+  p.qs=location.search;
+  p.platform=IS_MOBILE?'mobile':'desktop';
   try{
     new URLSearchParams(location.search).forEach(function(v,k){
-      if(/^utm_/i.test(k)) f["fields["+k.toUpperCase()+"]"]=v;
+      if(/^utm_/i.test(k)) p[k.toLowerCase()]=v;
     });
   }catch(e){}
-  return f;
+  return p;
 }
-function b24send(fields){
-  if(!B24||!navigator.sendBeacon) return false;
+function leadSend(p){ /* без чтения ответа: факты-клики */
   try{
-    var s=Object.keys(fields).map(function(k){
-      return encodeURIComponent(k)+"="+encodeURIComponent(fields[k]);
-    }).join("&");
-    return navigator.sendBeacon(B24,new Blob([s],{type:"application/x-www-form-urlencoded"}));
-  }catch(e){ return false; }
+    var s=new URLSearchParams(p).toString();
+    navigator.sendBeacon(LEAD_API,new Blob([s],{type:"application/x-www-form-urlencoded"}));
+  }catch(e){}
+}
+async function leadFetch(p){ /* с подтверждением: числовой ID созданного лида */
+  const body=new URLSearchParams(p).toString();
+  const ctrl=new AbortController();
+  const timer=setTimeout(()=>ctrl.abort(),15000);
+  try{
+    const res=await fetch(LEAD_API,{method:'POST',headers:{"Content-Type":"application/x-www-form-urlencoded"},body,keepalive:true,signal:ctrl.signal});
+    clearTimeout(timer);
+    if(!res.ok) return null;
+    const json=await res.json();
+    return (json&&json.ok&&typeof json.id==='number'&&json.id>0)?json.id:null;
+  }catch(e){ clearTimeout(timer); return null; }
 }
 /* Клик по ссылке WhatsApp → лид-факт (дедуп: раз за сессию на кнопку) */
 document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(el,i){
@@ -75,16 +86,13 @@ document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(el,i){
       sessionStorage.setItem(key,"1");
     }catch(e){}
     var where=el.closest("#header-messenger-panel")?"панель «Написать» в шапке":(el.closest("#messengers")?"блок контактов":"ссылка");
-    var f=b24common();
-    f["fields[TITLE]"]="Сайт погребов — клик WhatsApp («"+where+"»)";
-    f["fields[COMMENTS]"]="Клик по кнопке WhatsApp («"+where+"») — клиент ушёл писать в мессенджер.\nСтраница: "+location.pathname+location.search+"\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп");
-    b24send(f);
+    leadSend(leadParams({kind:"click",where:where}));
   });
 });
 /* Форма: лид уходит в Б24, экран успеха текстом в #form-result */
 function isNight(h){ if(h===undefined) h=new Date().getHours(); return h>=20||h<9; }
 var NIGHT=isNight();
-document.querySelector('#request-form').addEventListener('submit',e=>{
+document.querySelector('#request-form').addEventListener('submit',async e=>{
   e.preventDefault();
   const form=e.currentTarget;
   const phone=form.elements.phone;
@@ -97,25 +105,26 @@ document.querySelector('#request-form').addEventListener('submit',e=>{
   const contact=String(data.get('contact')||'');
   const messenger=String(data.get('messenger')||'');
   const notes=String(data.get('project_notes')||'');
-  const marketing=data.get('marketing_consent')==='yes'?'да':'нет';
+  const marketing=data.get('marketing_consent')==='yes'?'yes':'no';
+  const consent=data.get('personal_data_consent')==='yes'?'yes':'no';
   const answer=contact==='Позвонить'?'позвонить':('написать в '+messenger);
-  const page=location.pathname==='/'?'главная':'страница «Для продуктов»';
-  var f=b24common();
-  f["fields[TITLE]"]="Сайт погребов — заявка с формы ("+page+")";
-  f["fields[PHONE][0][VALUE]"]=String(data.get('phone')||'');
-  f["fields[PHONE][0][VALUE_TYPE]"]="WORK";
-  var c="Интересует: "+model+
-    "\nГород установки: "+city+
-    "\nКак ответить: "+answer+
-    (notes?("\nПожелания: "+notes):"")+
-    "\nРекламная рассылка: "+marketing+
-    "\nСтраница: "+location.pathname+location.search+
-    "\nПлатформа: "+(IS_MOBILE?"мобильный":"десктоп")+
-    (NIGHT?"\n⏰ Оставлено в нерабочее время — связаться утром, с 9:00":"");
-  f["fields[COMMENTS]"]=c;
-  if(NIGHT) f["fields[TITLE]"]="Сайт погребов — заявка с формы ("+page+", ночь, связаться с 9:00)";
-  b24send(f);
+  var p=leadParams({
+    kind:'form',model:model,city:city,phone:String(data.get('phone')||''),
+    contact:contact,messenger:messenger,notes:notes,
+    marketing:marketing,consent:consent,night:NIGHT?'1':'0',
+    company:String(data.get('company')||'')
+  });
+  const submitButton=form.querySelector('button[type="submit"]');
   const result=document.querySelector('#form-result');
+  submitButton.disabled=true;
+  const leadId=await leadFetch(p);
+  submitButton.disabled=false;
+  if(leadId===null){
+    result.textContent="Не получилось отправить. Проверьте связь и нажмите кнопку ещё раз — введённые данные сохранены.";
+    result.hidden=false;
+    result.scrollIntoView({behavior:'smooth',block:'nearest'});
+    return;
+  }
   form.reset();
   updateContactMethod(); /* восстановит channel-choice и спрячет result — показываем ПОСЛЕ */
   result.textContent=NIGHT
