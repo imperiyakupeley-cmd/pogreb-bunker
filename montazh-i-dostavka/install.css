@@ -1,0 +1,39 @@
+.install-page { --install-ink: #122d35; --install-soft: #edf4f2; --install-line: #d7e3e0; color: var(--install-ink); }
+.install-page h1, .install-page h2, .install-page h3, .install-page p, .install-page figure { margin: 0; }
+.install-page .breadcrumbs { margin: 22px 0 17px; }
+.install-page .button { width: fit-content; margin-top: 22px; font-size: 14px; text-decoration: none; }
+.install-hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); overflow: hidden; border-radius: 20px; background: #eaf3f2; color: var(--install-ink); }
+.install-hero-copy { padding: clamp(25px, 3.7vw, 49px); align-self: center; }
+.install-hero-copy .eyebrow { color: #3b6869; margin-bottom: 14px; }
+.install-page h1 { letter-spacing: -.045em; line-height: 1.03; font-size: clamp(34px, 4.45vw, 55px); }
+.install-hero-copy p { margin-top: 14px; font-size: 16px; line-height: 1.55; color: #385258; max-width: 42ch; }
+.install-hero-copy p:first-of-type { color: var(--install-ink); font-size: clamp(17px, 1.65vw, 21px); }
+.install-hero-copy .button { background: #006776; border-color: #006776; color: white; }
+.install-hero-copy .button:hover { background: #005461; border-color: #005461; }
+.install-photo { position: relative; display: grid; grid-template-rows: 1fr auto; min-width: 0; }
+.install-photo .zoom-photo { position: relative; width: 100%; height: 100%; min-height: 235px; padding: 0; border: 0; border-radius: 0; }
+.install-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+.install-photo figcaption { padding: 12px 20px; background: #e0edeb; font-size: 14px; }
+.install-photo a { color: #174e54; text-decoration: underline; text-underline-offset: 3px; }
+.install-scenarios { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 17px; }
+.install-scenarios article, .install-checklist { padding: clamp(20px, 3vw, 34px); border-radius: 15px; background: var(--install-soft); }
+.install-scenarios article { background: #f3f7f6; }
+.install-scenarios article + article { background: #f7f8f7; border: 1px solid var(--install-line); }
+.install-page .install-label { font-size: 13px; font-weight: 700; color: #366366; margin-bottom: 9px; }
+.install-page h2 { font-size: clamp(25px, 3vw, 37px); line-height: 1.13; letter-spacing: -.025em; }
+.install-scenarios article p:last-child, .install-estimate p, .install-faq details p { margin-top: 12px; max-width: 61ch; font-size: 16px; line-height: 1.6; }
+.install-estimate { margin-top: clamp(36px, 6vw, 70px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 5vw, 63px); align-items: start; }
+.install-checklist h3 { font-size: 21px; }
+.install-checklist ul { padding-left: 1.2em; margin: 13px 0 0; font-size: 16px; line-height: 1.55; }
+.install-checklist li + li { margin-top: 10px; }
+.install-faq { margin-top: 36px; margin-bottom: 42px; }
+.install-faq h2 { margin-bottom: 13px; }
+.install-faq details { border-block-start: 1px solid var(--install-line); padding: 14px 0; }
+.install-faq details:last-child { border-block-end: 1px solid var(--install-line); }
+.install-faq summary { cursor: pointer; font-size: 16px; font-weight: 700; }
+.install-page a:focus-visible, .install-page button:focus-visible, .install-page summary:focus-visible { outline: 2px solid #168484; outline-offset: 3px; }
+@media (max-width: 760px) {
+  .install-hero, .install-scenarios, .install-estimate { grid-template-columns: 1fr; }
+  .install-hero { border-radius: 15px; }
+  .install-photo .zoom-photo { min-height: 0; aspect-ratio: 16 / 10; }
+}
